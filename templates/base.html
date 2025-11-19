@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ page_title | default("Accessibility Hub") }}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='navbar.css') }}"
+    />
+  </head>
+  <body>
+    {% include "navbar.html" %}
+
+    <main class="main-container mt-4">{% block content %}{% endblock %}</main>
+  </body>
+</html>
+
+<style>
+  .main-container {
+    padding: 2em;
+  }
+</style>
