@@ -16,7 +16,7 @@ users = User(DB_PATH)
 organizations = Organization(DB_PATH)
 studies = Study(DB_PATH)
 enrollments = Enrollment(DB_PATH)
-@app.route("/")
+@app.route("/ede")
 def index():
     counts = {
         "experts": users.count_all()[0],
@@ -25,6 +25,10 @@ def index():
         "enrollments": enrollments.count_all()[0],
     }
     return render_template("index.html", counts=counts)
+
+@app.route("/")
+def maak():
+    return render_template("maak_organisatieaccount.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

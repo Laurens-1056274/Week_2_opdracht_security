@@ -1,0 +1,45 @@
+<!doctype html>
+  <html lang="nl">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Accessibility Hub</title>
+  </head>
+  <body>
+    <h1>Pagina om organisatie account aan te maken</h1>
+    <p>Vul het onderstaande formulier in om een organisatie toe te voegen</p>
+
+    <form action="/action_page.php">
+        <label for="name">naam organisatie:</label>
+        <br><input type="text" id="name" name="name" value="naam"><br><br>
+
+        <label for="options">Keuze type bedrijf:</label><br>
+        <input type="radio" id="option_1" name="options" value="commercieel">
+        
+        <label for="commercieel">commercieel</label>
+        <input type="radio" id="option_2" name="options" value="non-profit">
+        <label for="non-profit">non-profit</label><br><br>
+
+        <label for="website">link naar website:</label>
+        <br><input type="text" id="website" name="website" value="website url"><br><br>
+
+        <label for="beschrijving">beschrijving organisatie:</label>
+        <br><input type="text" id="beschrijving" name="beschrijving" value="beschrijving"><br><br>
+
+        <label for="contactpersoon">naam contactpersoon:</label>
+        <br><input type="text" id="contactpersoon" name="contactpersoon" value="contactpersoon"><br><br>
+
+        <label for="e-mail">e-mail adress:</label>
+        <br><input type="text" id="e-mail" name="e-mail" value="e-mail"><br><br>
+
+        <label for="telefoon_nummer">telefoon nummer:</label>
+        <br><input type="text" id="telefoon_nummer" name="telefoon_nummer" value="telefoon nummer"><br><br>
+
+        <label for="overige_details">overige details:</label>
+        <br><input type="text" id="overige_details" name="overige_details" value="overige details"><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+  </body>
+</html>
