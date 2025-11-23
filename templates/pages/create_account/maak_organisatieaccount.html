@@ -1,11 +1,6 @@
-<!doctype html>
-  <html lang="nl">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Accessibility Hub</title>
-  </head>
-  <body>
+{% extends "base.html" %}
+{% block title %}Organisatie account aanmaken{% endblock %}
+{% block content %}
     <h1>Pagina om organisatie account aan te maken</h1>
     <p>Vul het onderstaande formulier in om een organisatie toe te voegen</p>
 
@@ -40,6 +35,4 @@
 
         <input type="submit" value="Submit">
     </form>
-
-  </body>
-</html>
+{% endblock %}

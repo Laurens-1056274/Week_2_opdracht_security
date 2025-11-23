@@ -28,7 +28,7 @@ def index():
 
 @app.route("/")
 def maak():
-    return render_template("maak_organisatieaccount.html")
+    return render_template("pages/create_account/maak_organisatieaccount.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
