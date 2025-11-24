@@ -1,2 +1,4 @@
 https://www.w3schools.com/html/
 https://www.w3schools.com/css/
+https://www.geeksforgeeks.org/python/inserting-variables-to-database-table-using-python/
+
