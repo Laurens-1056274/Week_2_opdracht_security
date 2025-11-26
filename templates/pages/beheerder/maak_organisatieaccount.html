@@ -1,92 +1,205 @@
 {% extends "base.html" %} {% block content %}
-<h1>Pagina om organisatie account aan te maken</h1>
-<p>Vul het onderstaande formulier in om een organisatie toe te voegen</p>
 
-<form action="/submit" method="POST">
-  <label for="name">naam organisatie:</label>
-  <br /><input
-    type="text"
-    id="name"
-    name="name"
-    placeholder="naam"
-    required
-  /><br /><br />
+<div class="form-container">
+  <h2 class="subtitle">
+    Vul het onderstaande formulier in om een organisatie toe te voegen
+  </h2>
 
-  <label for="options">Keuze type bedrijf:</label><br />
+  <form
+    action="/submit"
+    method="POST"
+    class="form-card"
+    aria-describedby="formInfo"
+  >
+    <div class="form-group">
+      <label for="name">Naam organisatie</label>
+      <input type="text" id="name" name="name" placeholder="naam" required />
+    </div>
 
-  <div>
-    <input
-      type="radio"
-      id="option_1"
-      name="type"
-      value="commercieel"
-      required
-      title="commercieel"
-    />
-    <label for="commercieel">commercieel</label>
-    <input
-      type="radio"
-      id="option_2"
-      name="type"
-      value="non-profit"
-      title="non-profit"
-    />
-    <label for="non-profit">non-profit</label><br /><br />
-  </div>
+    <div class="form-group">
+      <label>Keuze type bedrijf</label>
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="type" value="commercieel" required />
+          Commercieel
+        </label>
+        <label>
+          <input type="radio" name="type" value="non-profit" />
+          Non-profit
+        </label>
+      </div>
+    </div>
 
-  <label for="website">link naar website:</label>
-  <br /><input
-    type="text"
-    id="website"
-    name="website"
-    placeholder="website url"
-    required
-  /><br /><br />
+    <div class="form-group">
+      <label for="website">Link naar website</label>
+      <input
+        type="url"
+        id="website"
+        name="website"
+        placeholder="website url"
+        required
+      />
+    </div>
 
-  <label for="beschrijving">beschrijving organisatie:</label>
-  <br /><input
-    type="text"
-    id="description"
-    name="description"
-    placeholder="beschrijving"
-    required
-  /><br /><br />
+    <div class="form-group">
+      <label for="description">Beschrijving organisatie</label>
+      <textarea
+        id="description"
+        name="description"
+        placeholder="beschrijving"
+        required
+      ></textarea>
+    </div>
 
-  <label for="contactpersoon">naam contactpersoon:</label>
-  <br /><input
-    type="text"
-    id="contact_person"
-    name="contact_person"
-    placeholder="contactpersoon"
-    required
-  /><br /><br />
+    <div class="form-group">
+      <label for="contact_person">Naam contactpersoon</label>
+      <input
+        type="text"
+        id="contact_person"
+        name="contact_person"
+        placeholder="contactpersoon"
+        required
+      />
+    </div>
 
-  <label for="e-mail">e-mail adress:</label>
-  <br /><input
-    type="text"
-    id="email"
-    name="email"
-    placeholder="e-mail"
-    required
-  /><br /><br />
+    <div class="form-group">
+      <label for="email">E-mail adres</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="e-mail"
+        required
+      />
+    </div>
 
-  <label for="telefoon_nummer">telefoon nummer:</label>
-  <br /><input
-    type="text"
-    id="phone"
-    name="phone"
-    placeholder="telefoon nummer"
-    required
-  /><br /><br />
+    <div class="form-group">
+      <label for="phone">Telefoonnummer</label>
+      <input
+        type="tel"
+        id="phone"
+        name="phone"
+        placeholder="telefoon nummer"
+        required
+      />
+    </div>
 
-  <label for="overige_details">overige details:</label>
-  <br /><input
-    type="text"
-    id="details"
-    name="details"
-    placeholder="extra details"
-  /><br /><br />
+    <div class="form-group">
+      <label for="details">Overige details</label>
+      <textarea
+        id="details"
+        name="details"
+        placeholder="extra details"
+      ></textarea>
+    </div>
 
-  <input type="submit" value="Submit" />
-</form>
+    <button type="submit" class="submit-btn">Verzenden</button>
+  </form>
+</div>
+<style>
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50em;
+    margin: 0 auto;
+    padding: 2.5em;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e2e2e2;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  h2 {
+    color: #222;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.4em;
+    text-align: center;
+  }
+
+  .subtitle {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 1.5em;
+    text-align: center;
+    max-width: 500px;
+  }
+
+  .form-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4em;
+  }
+
+  .form-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-group label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.4em;
+    color: #333;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 0.85em;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    border: 1px solid #cfcfcf;
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  input:focus,
+  textarea:focus {
+    border-color: #0077cc;
+    box-shadow: 0 0 4px rgba(0, 119, 204, 0.25);
+    outline: none;
+  }
+
+  textarea {
+    min-height: 90px;
+    resize: vertical;
+  }
+
+  .radio-group {
+    display: flex;
+    gap: 2em;
+    font-size: 0.95rem;
+    margin-top: 0.3em;
+  }
+
+  .radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    cursor: pointer;
+    color: #444;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 0.9em;
+    font-size: 1rem;
+    font-weight: 600;
+    background: #0077cc;
+    color: #ffffff;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .submit-btn:hover {
+    background: #005fa3;
+  }
+</style>
+
 {% endblock %}
