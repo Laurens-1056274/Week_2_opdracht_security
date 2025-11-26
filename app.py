@@ -24,19 +24,19 @@ def index():
         "studies": studies.count_all()[0],
         "enrollments": enrollments.count_all()[0],
     }
-    return render_template("pages/index.html", counts=counts, page_title="Home Page - Accessibility Hub")
+    return render_template("pages/index.html", counts=counts, page_title="Home")
 
-@app.route("/second")
-def second_page():
-    return render_template("pages/secondpage.html", page_title="Second Page - Accessibility Hub")
+@app.route("/ervaringsdeskunidge_dashboard")
+def ervaringsdeskunidge_dashboard():
+    return render_template("pages/ervaringsDeskundigeDashboard.html", page_title="dashboard")
 
 @app.route("/register")
 def register_page():
-    return render_template("pages/login/register.html", page_title="Register Page - Accessibility Hub")
+    return render_template("pages/login/register.html", page_title="Register")
 
 @app.route("/login")
 def login_page():
-    return render_template("pages/login/login.html", page_title="Login Page - Accessibility Hub")
+    return render_template("pages/login/login.html", page_title="Login")
 
 
 if __name__ == "__main__":
