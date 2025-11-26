@@ -1,33 +1,26 @@
 <!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <title>My Website</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='naam.css') }}">
-</head>
-<body>
-    {% block content %}
-  
-    {% endblock %}
-</body>
-<style>
-body {
-  background-color: rgba(255, 255, 255, 0.372);
-}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ page_title | default("Accessibility Hub") }}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='navbar.css') }}"
+    />
+  </head>
+  <body>
+    {% include "navbar.html" %}
 
-h1,p {
-  color: black;
-  text-align: center;
-}
-
-label {
-  font-weight:  bold;
-
-}
-
-div label {
-  font-weight: normal;
-}
-
-</style>
+    <main class="main-container mt-4">
+      <h1>{{ page_title }}</h1>
+      {% block content %}{% endblock %}
+    </main>
+  </body>
 </html>
+
+<style>
+  .main-container {
+    padding: 2em;
+  }
+</style>
