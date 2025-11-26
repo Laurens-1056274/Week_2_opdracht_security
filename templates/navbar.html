@@ -21,16 +21,16 @@
       </li>
       <li>
         <a
-          href="{{ url_for('ervaringsdeskunidge_dashboard') }}"
-          class="{% if request.endpoint == 'ervaringsdeskunidge_dashboard' %}active{% endif %}"
-          >ED Dashboard</a
+          href="{{ url_for('login_page') }}"
+          class="{% if request.endpoint == 'login_page' %}active{% endif %}"
+          >Register/Login</a
         >
       </li>
       <li>
         <a
-          href="{{ url_for('login_page') }}"
-          class="{% if request.endpoint == 'login_page' %}active{% endif %}"
-          >Register/Login</a
+          href="{{ url_for('OrganisatieAccount') }}"
+          class="{% if request.endpoint == 'OrganisatieAccount' %}active{% endif %}"
+          >OrganisatieAccount</a
         >
       </li>
     </ul>

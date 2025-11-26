@@ -1,41 +1,92 @@
-{% extends "base.html" %}
-{% block title %}Organisatie account aanmaken{% endblock %}
-{% block content %}
-    <h1>Pagina om organisatie account aan te maken</h1>
-    <p>Vul het onderstaande formulier in om een organisatie toe te voegen</p>
+{% extends "base.html" %} {% block content %}
+<h1>Pagina om organisatie account aan te maken</h1>
+<p>Vul het onderstaande formulier in om een organisatie toe te voegen</p>
 
-    <form action="/submit" method="POST">
-        
-        <label for="name">naam organisatie:</label>
-        <br><input type="text" id="name" name="name" placeholder="naam" required><br><br>
+<form action="/submit" method="POST">
+  <label for="name">naam organisatie:</label>
+  <br /><input
+    type="text"
+    id="name"
+    name="name"
+    placeholder="naam"
+    required
+  /><br /><br />
 
-        <label for="options">Keuze type bedrijf:</label><br>
+  <label for="options">Keuze type bedrijf:</label><br />
 
-        <div>
-            <input type="radio" id="option_1" name="type" value="commercieel" required title="commercieel">
-            <label for="commercieel">commercieel</label>
-            <input type="radio" id="option_2" name="type" value="non-profit" title="non-profit">
-            <label for="non-profit">non-profit</label><br><br>
-        </div>
+  <div>
+    <input
+      type="radio"
+      id="option_1"
+      name="type"
+      value="commercieel"
+      required
+      title="commercieel"
+    />
+    <label for="commercieel">commercieel</label>
+    <input
+      type="radio"
+      id="option_2"
+      name="type"
+      value="non-profit"
+      title="non-profit"
+    />
+    <label for="non-profit">non-profit</label><br /><br />
+  </div>
 
-        <label for="website">link naar website:</label>
-        <br><input type="text" id="website" name="website" placeholder="website url" required><br><br>
+  <label for="website">link naar website:</label>
+  <br /><input
+    type="text"
+    id="website"
+    name="website"
+    placeholder="website url"
+    required
+  /><br /><br />
 
-        <label for="beschrijving">beschrijving organisatie:</label>
-        <br><input type="text" id="description" name="description" placeholder="beschrijving" required><br><br>
+  <label for="beschrijving">beschrijving organisatie:</label>
+  <br /><input
+    type="text"
+    id="description"
+    name="description"
+    placeholder="beschrijving"
+    required
+  /><br /><br />
 
-        <label for="contactpersoon">naam contactpersoon:</label>
-        <br><input type="text" id="contact_person" name="contact_person" placeholder="contactpersoon" required><br><br>
+  <label for="contactpersoon">naam contactpersoon:</label>
+  <br /><input
+    type="text"
+    id="contact_person"
+    name="contact_person"
+    placeholder="contactpersoon"
+    required
+  /><br /><br />
 
-        <label for="e-mail">e-mail adress:</label>
-        <br><input type="text" id="email" name="email" placeholder="e-mail" required><br><br>
+  <label for="e-mail">e-mail adress:</label>
+  <br /><input
+    type="text"
+    id="email"
+    name="email"
+    placeholder="e-mail"
+    required
+  /><br /><br />
 
-        <label for="telefoon_nummer">telefoon nummer:</label>
-        <br><input type="text" id="phone" name="phone" placeholder="telefoon nummer" required><br><br>
+  <label for="telefoon_nummer">telefoon nummer:</label>
+  <br /><input
+    type="text"
+    id="phone"
+    name="phone"
+    placeholder="telefoon nummer"
+    required
+  /><br /><br />
 
-        <label for="overige_details">overige details:</label>
-        <br><input type="text" id="details" name="details" placeholder="extra details"><br><br>
+  <label for="overige_details">overige details:</label>
+  <br /><input
+    type="text"
+    id="details"
+    name="details"
+    placeholder="extra details"
+  /><br /><br />
 
-        <input type="submit" value="Submit">
-    </form>
+  <input type="submit" value="Submit" />
+</form>
 {% endblock %}

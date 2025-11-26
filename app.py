@@ -18,7 +18,7 @@ users = User(DB_PATH)
 organizations = Organization(DB_PATH)
 studies = Study(DB_PATH)
 enrollments = Enrollment(DB_PATH)
-@app.route("/ede")
+@app.route("/")
 def index():
     counts = {
         "experts": users.count_all()[0],
@@ -41,9 +41,9 @@ def login_page():
     return render_template("pages/login/login.html", page_title="Login")
 
 
-@app.route("/")
-def maak_account():
-    return render_template("pages/beheerder/maak_organisatieaccount.html")
+@app.route("/OrganisatieAccount")
+def OrganisatieAccount():
+    return render_template("pages/beheerder/maak_organisatieaccount.html", page_title="OrganisatieAccount")
 
 @app.route("/submit", methods=["GET", "POST"])
 def submit():
