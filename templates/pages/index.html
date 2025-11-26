@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% block content %}
+<div class="index">
+  <p>
+    Dit is een eenvoudige start voor de casus “Accessibility Hub”. De pagina
+    hieronder leest data uit jouw SQLite database.
+  </p>
+
+  <h2>Snelle statistieken</h2>
+  <ul>
+    <li>{{ counts.experts }} ervaringsdeskundigen</li>
+    <li>{{ counts.organizations }} organisaties</li>
+    <li>{{ counts.studies }} onderzoeken</li>
+    <li>{{ counts.enrollments }} inschrijvingen</li>
+  </ul>
+</div>
+{% endblock %}

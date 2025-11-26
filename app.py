@@ -24,7 +24,20 @@ def index():
         "studies": studies.count_all()[0],
         "enrollments": enrollments.count_all()[0],
     }
-    return render_template("index.html", counts=counts)
+    return render_template("pages/index.html", counts=counts, page_title="Home")
+
+@app.route("/ervaringsdeskunidge_dashboard")
+def ervaringsdeskunidge_dashboard():
+    return render_template("pages/ervaringsDeskundigeDashboard.html", page_title="dashboard")
+
+@app.route("/register")
+def register_page():
+    return render_template("pages/login/register.html", page_title="Register")
+
+@app.route("/login")
+def login_page():
+    return render_template("pages/login/login.html", page_title="Login")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
