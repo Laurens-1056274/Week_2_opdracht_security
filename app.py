@@ -30,7 +30,7 @@ def index():
 
 @app.route("/")
 def maak_account():
-    return render_template("pages/create_account/maak_organisatieaccount.html")
+    return render_template("pages/beheerder/maak_organisatieaccount.html")
 
 @app.route("/submit", methods=["GET", "POST"])
 def submit():
