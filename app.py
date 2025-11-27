@@ -6,6 +6,7 @@ from models.organization import Organization
 from models.study import Study
 from models.enrollment import Enrollment
 from add_new_organisationaccount import submit_organisation_account
+from login_user import login_account
 
 
 app = Flask(__name__)
@@ -40,6 +41,16 @@ def register_page():
 def login_page():
     return render_template("pages/login/login.html", page_title="Login")
 
+@app.route("/login_check", methods=["GET", "POST"])
+def check_login():
+    if request.method == "GET":
+        return redirect("/")
+    data = request.form
+    login_account(
+    data["e-mail"],
+    data["wachtwoord"]
+    ).search_user_database()
+    return redirect("/")
 
 @app.route("/OrganisatieAccount")
 def OrganisatieAccount():
@@ -61,6 +72,8 @@ def submit():
     data["details"]
     ).add_to_database()
     return redirect("/")
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

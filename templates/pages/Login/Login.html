@@ -1,1 +1,24 @@
-{% extends "base.html" %} {% block content %} {% endblock %}
+{% extends "base.html" %}
+{% block content %}
+<form action="/login_check" method="POST">
+  <label for="e-mail">uw e-mail adress:</label>
+  <br /><input
+    type="text"
+    id="e-mail"
+    name="e-mail"
+    placeholder="voorbeeld@gmail.com"
+    required
+  /><br /><br />
+
+  <label for="wachtwoord">uw wachtwoord:</label>
+  <br /><input
+    type="text"
+    id="wachtwoord"
+    name="wachtwoord"
+    placeholder="wachtwoord"
+    required
+  /><br /><br />
+  <input type="submit" value="Submit" />
+</form>
+
+{% endblock %}
