@@ -27,19 +27,28 @@ def index():
         "studies": studies.count_all()[0],
         "enrollments": enrollments.count_all()[0],
     }
-    return render_template("pages/index.html", counts=counts, page_title="Home")
+    return render_template("pages/index.html", 
+                           counts=counts, 
+                           page_title="Home",
+                           description="Index Pagina")
 
 @app.route("/ervaringsdeskunidge_dashboard")
 def ervaringsdeskunidge_dashboard():
-    return render_template("pages/ervaringsDeskundigeDashboard.html", page_title="dashboard")
+    return render_template("pages/ervaringsDeskundigeDashboard.html", 
+                           page_title="dashboard",
+                           description="Ervarings Deskundige Dashboard")
 
 @app.route("/register")
 def register_page():
-    return render_template("pages/login/register.html", page_title="Register")
+    return render_template("pages/login/register.html", 
+                           page_title="Register",
+                           description="Ervarings Deskundige Register page")
 
 @app.route("/login")
 def login_page():
-    return render_template("pages/login/login.html", page_title="Login")
+    return render_template("pages/login/login.html", 
+                           page_title="Login",
+                           description="Ervarings Deskundige Login page")
 
 @app.route("/login_check", methods=["GET", "POST"])
 def check_login():
@@ -54,7 +63,9 @@ def check_login():
 
 @app.route("/OrganisatieAccount")
 def OrganisatieAccount():
-    return render_template("pages/beheerder/maak_organisatieaccount.html", page_title="OrganisatieAccount")
+    return render_template("pages/beheerder/maak_organisatieaccount.html", 
+                           page_title="OrganisatieAccount", 
+                           description="Pagina om een organisatieaccount aan te maken. Vul het formulier in om een organisatie toe te voegen.")
 
 @app.route("/submit", methods=["GET", "POST"])
 def submit():

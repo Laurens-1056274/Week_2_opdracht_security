@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="{{ description }}" />
+
     <title>{{ page_title | default("Accessibility Hub") }}</title>
     <link
       rel="stylesheet"
@@ -20,7 +22,26 @@
 </html>
 
 <style>
+  body {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
+      sans-serif;
+    font-size: 15px;
+  }
   .main-container {
     padding: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  a {
+    text-decoration: none;
+    transition: 0.4s;
+    padding: 3px;
+  }
+
+  h1 {
+    font-size: 1.75rem;
   }
 </style>
