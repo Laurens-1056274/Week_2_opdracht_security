@@ -6,6 +6,7 @@ class login_account:
     def __init__(self,attribute1,attribute2):
         self.email = attribute1
         self.password = attribute2
+        self.correct = "yes"
 
     def search_user_database(self):
         conn = sqlite3.connect('data/app.db')
@@ -13,8 +14,7 @@ class login_account:
         c.execute("SELECT * FROM users WHERE email = ? AND password = ?", (self.email, self.password))
         result = c.fetchall()
         if len(result) == 0:
-            print('uh oh, no existing account silly!')
-        
+            self.correct = "no" 
         else:
             print(result[0])
         conn.commit()

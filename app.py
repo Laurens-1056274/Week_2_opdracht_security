@@ -5,8 +5,8 @@ from models.user import User
 from models.organization import Organization
 from models.study import Study
 from models.enrollment import Enrollment
-from add_new_organisationaccount import submit_organisation_account
-from login_user import login_account
+from database_related_code.add_new_organisationaccount import submit_organisation_account
+from database_related_code.login_user import login_account
 
 
 app = Flask(__name__)
@@ -55,10 +55,12 @@ def check_login():
     if request.method == "GET":
         return redirect("/")
     data = request.form
-    login_account(
-    data["e-mail"],
+    querie =login_account(
+    data["email"],
     data["wachtwoord"]
-    ).search_user_database()
+    )
+    querie.search_user_database()
+    print(querie.correct)
     return redirect("/")
 
 @app.route("/OrganisatieAccount")
