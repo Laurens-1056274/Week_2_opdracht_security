@@ -1,10 +1,12 @@
 import os
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template,request,redirect,url_for
 from data.database import Database
 from models.user import User
 from models.organization import Organization
 from models.study import Study
 from models.enrollment import Enrollment
+from add_new_organisationaccount import submit_organisation_account
+
 
 app = Flask(__name__)
 
@@ -56,6 +58,52 @@ def inschrijving_afkeuren(inschrijving_id):
     # status aanpassen naar afgekeurd
     enrollments.update_status(inschrijving_id, "afgekeurd")
     return redirect(url_for("beheerder_inschrijvingen"))
+    return render_template("pages/index.html", 
+                           counts=counts, 
+                           page_title="Home",
+                           description="Index Pagina")
+
+@app.route("/ervaringsdeskunidge_dashboard")
+def ervaringsdeskunidge_dashboard():
+    return render_template("pages/ervaringsDeskundigeDashboard.html", 
+                           page_title="dashboard",
+                           description="Ervarings Deskundige Dashboard")
+
+@app.route("/register")
+def register_page():
+    return render_template("pages/login/register.html", 
+                           page_title="Register",
+                           description="Ervarings Deskundige Register page")
+
+@app.route("/login")
+def login_page():
+    return render_template("pages/login/login.html", 
+                           page_title="Login",
+                           description="Ervarings Deskundige Login page")
+
+
+@app.route("/OrganisatieAccount")
+def OrganisatieAccount():
+    return render_template("pages/beheerder/maak_organisatieaccount.html", 
+                           page_title="OrganisatieAccount", 
+                           description="Pagina om een organisatieaccount aan te maken. Vul het formulier in om een organisatie toe te voegen.")
+
+@app.route("/submit", methods=["GET", "POST"])
+def submit():
+    if request.method == "GET":
+        return redirect("/")
+    data = request.form
+    submit_organisation_account(
+    data["name"],
+    data["type"],
+    data["website"],
+    data["description"],
+    data["contact_person"],
+    data["email"],
+    data["phone"],
+    data["details"]
+    ).add_to_database()
+    return redirect("/")
 
 if __name__ == "__main__":
     app.run(debug=True)
