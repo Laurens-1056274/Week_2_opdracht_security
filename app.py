@@ -26,7 +26,7 @@ def index():
         "studies": studies.count_all()[0],
         "enrollments": enrollments.count_all()[0],
     }
-    return render_template("index.html", counts=counts)
+    return render_template("pages/index.html", counts=counts)
 @app.route("/beheerder/inschrijvingen")
 def beheerder_inschrijvingen():
     # echte inschrijvingen met details uit de database
@@ -58,10 +58,6 @@ def inschrijving_afkeuren(inschrijving_id):
     # status aanpassen naar afgekeurd
     enrollments.update_status(inschrijving_id, "afgekeurd")
     return redirect(url_for("beheerder_inschrijvingen"))
-    return render_template("pages/index.html", 
-                           counts=counts, 
-                           page_title="Home",
-                           description="Index Pagina")
 
 @app.route("/ervaringsdeskunidge_dashboard")
 def ervaringsdeskunidge_dashboard():
