@@ -19,6 +19,9 @@ users = User(DB_PATH)
 organizations = Organization(DB_PATH)
 studies = Study(DB_PATH)
 enrollments = Enrollment(DB_PATH)
+user_role_admin = False
+user_role_organization = False
+user_role_expert = False
 @app.route("/")
 def index():
     counts = {
@@ -44,11 +47,7 @@ def register_page():
                            page_title="Register",
                            description="Ervarings Deskundige Register page")
 
-@app.route("/login")
-def login_page():
-    return render_template("pages/login/login.html", 
-                           page_title="Login",
-                           description="Ervarings Deskundige Login page")
+
 
 @app.route("/login_check", methods=["GET", "POST"])
 def check_login():
@@ -59,9 +58,17 @@ def check_login():
     data["email"],
     data["wachtwoord"]
     )
-    querie.search_user_database()
-    print(querie.correct)
-    return redirect("/")
+    check_user = querie.search_user_database()
+    user_type = check_user
+    return redirect(f"/login?correct={querie.correct}")
+
+@app.route("/login")
+def login_page():
+    correct = request.args.get("correct")
+    return render_template("pages/login/login.html", 
+                           page_title="Login",
+                           description="Login page",
+                           correct=correct)
 
 @app.route("/OrganisatieAccount")
 def OrganisatieAccount():

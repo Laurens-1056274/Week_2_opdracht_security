@@ -11,11 +11,12 @@ class login_account:
     def search_user_database(self):
         conn = sqlite3.connect('data/app.db')
         c = conn.cursor()
-        c.execute("SELECT * FROM users WHERE email = ? AND password = ?", (self.email, self.password))
+        c.execute("SELECT * FROM users WHERE email = ? AND password = ? AND status = 'goedgekeurd'", (self.email, self.password))
         result = c.fetchall()
         if len(result) == 0:
             self.correct = "no" 
         else:
-            print(result[0])
+            result = result[0][3]
         conn.commit()
         conn.close()
+        return result

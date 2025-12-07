@@ -1,4 +1,6 @@
 https://www.w3schools.com/html/
 https://www.w3schools.com/css/
 https://www.geeksforgeeks.org/python/inserting-variables-to-database-table-using-python/
-
+https://jinja.palletsprojects.com/en/stable/templates/
+https://www.w3schools.com/css/tryit.asp?filename=trycss_form_border
+https://flask.palletsprojects.com/en/stable/quickstart/#sessions

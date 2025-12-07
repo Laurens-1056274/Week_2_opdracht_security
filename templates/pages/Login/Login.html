@@ -2,12 +2,33 @@
 {% block content %}
 <div class="form-container">
   <h2 class="subtitle"> Vul de onderstaande gegevens in om in te loggen </h2>
+  
+  {% if correct == "no" %}
+    <style>
+      label {display: block;}
+
+      input[type=text],
+      input[type=email] {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        box-sizing: border-box;
+        border: 2px solid red;
+        border-radius: 8px;
+      }
+    </style>
+  {% endif %}
 
   <form action="/login_check" method="POST" class="form-card" >
+    {% if correct == "no" %}
+    <h3> Verkeerde inloggegevens</h3>
+    {% endif %}
     <div class="form-group">
       <label for="email">uw e-mail adress:</label>
       <input type="email" id="email" name="email" placeholder="voorbeeld@gmail.com" required />
     </div>
+
+
 
     <div class="form-group">
       <label for="wachtwoord">uw wachtwoord:</label>
