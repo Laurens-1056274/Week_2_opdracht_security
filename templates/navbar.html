@@ -19,13 +19,15 @@
           >Home</a
         >
       </li>
+      {% if session.user_type == "not defined" %}
       <li>
         <a
           href="{{ url_for('login_page') }}"
           class="{% if request.endpoint == 'login_page' %}active{% endif %}"
-          >Login</a
-        >
+          >Login</a>
       </li>
+      {% endif %}
+      {% if session.user_type == "admin" %}
       <li>
         <a
           href="{{ url_for('OrganisatieAccount') }}"
@@ -33,6 +35,7 @@
           >OrganisatieAccount</a
         >
       </li>
+      {% endif %}
     </ul>
   </div>
 </nav>
