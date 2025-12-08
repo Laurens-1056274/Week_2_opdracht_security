@@ -19,6 +19,17 @@
           >Home</a
         >
       </li>
+
+      {% if session.user_type == "admin" %}
+      <li>
+        <a
+          href="{{ url_for('OrganisatieAccount') }}"
+          class="{% if request.endpoint == 'OrganisatieAccount' %}active{% endif %}"
+          >OrganisatieAccount</a
+>
+      </li>
+      {% endif %}
+
       {% if session.user_type == "not defined" %}
       <li>
         <a
@@ -27,15 +38,16 @@
           >Login</a>
       </li>
       {% endif %}
-      {% if session.user_type == "admin" %}
+
+      {% if session.user_type != "not defined" %}
       <li>
-        <a
-          href="{{ url_for('OrganisatieAccount') }}"
-          class="{% if request.endpoint == 'OrganisatieAccount' %}active{% endif %}"
-          >OrganisatieAccount</a
-        >
+        <a href="{{ url_for('logout') }}"
+          class="{% if request.endpoint == 'logout' %}active{% endif %}">
+          Logout
+        </a>
       </li>
       {% endif %}
+
     </ul>
   </div>
 </nav>

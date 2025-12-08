@@ -105,6 +105,18 @@ def login_page():
                            description="Login page",
                            correct=correct)
 
+
+@app.route("/logout")
+def logout():
+    return render_template("pages/login/logout.html", 
+                           page_title="uitloggen", 
+                           description="Pagina om uit te loggen, klik op de uitloggen knop om uit te loggen.")
+
+@app.route("/clear_session")
+def clear_session():
+    session.clear()
+    return redirect("/")
+    
 @app.route("/OrganisatieAccount")
 def OrganisatieAccount():
     return render_template("pages/beheerder/maak_organisatieaccount.html", 
