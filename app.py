@@ -56,6 +56,14 @@ def OrganisatieAccount():
                            page_title="OrganisatieAccount", 
                            description="Pagina om een organisatieaccount aan te maken. Vul het formulier in om een organisatie toe te voegen.")
 
+
+@app.route("/ervaringsdeskundige_registratie/int:id>")
+def ervaringsdeskundige_registratie():
+    return render_template("templates/pages/beheerder/ervaringsdeskundige_registraties.html",
+                                    page_title="",
+                                    description="pagina voor het inzien van de registraties van de ervaringsdeskundigen")
+
+
 @app.route("/submit", methods=["GET", "POST"])
 def submit():
     if request.method == "GET":

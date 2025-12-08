@@ -29,15 +29,19 @@
         </tr>
         <tr>
             <th>Voornaam</th>
-            <td>waarde</td>
+            <td>{{ profiles.first_name }}</td>
         </tr>
         <tr>
             <th>Achternaam</th>
-            <td>waarde</td>
+            <td>{{ profiles.last_name }}</td>
         </tr>
         <tr>
-            <th>Leeftijd</th>
-            <td>waarde</td>
+            <th>Geboortedatum</th>
+            <td>{{ profiles.birth_date }}</td>
+        </tr>
+        <tr>
+            <th>Geslacht</th>
+            <td>{{ profiles.gender }}</td>
         </tr>
         <tr>
             <th>E-mail adres</th>
@@ -45,7 +49,7 @@
         </tr>
         <tr>
             <th>Telefoon nummer</th>
-            <td>waarde</td>
+            <td>{{ profiles.phone }}</td>
         </tr>
         <tr>
             <th>Straat en huisnummer</th>
@@ -53,7 +57,7 @@
         </tr>
         <tr>
             <th>Postcode</th>
-            <td>waarde</td>
+            <td>{{ profiles.postcode }}</td>
         </tr>
         <tr>
             <th>Stad</th>
@@ -84,10 +88,9 @@
             <th>Gegevens</th>
             <td>Waarde</td>
         </tr>
-
-
-
-
     </table>
+<br>
+<button type = "button "> goedkeuren </button>
+<button type = "button"> afkeuren </button>
 </body>
 </html>
