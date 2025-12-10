@@ -6,6 +6,7 @@ from models.organization import Organization
 from models.study import Study
 from models.enrollment import Enrollment
 from database_related_code.add_new_organisationaccount import submit_organisation_account
+from database_related_code.login_oranization import login_account_organization
 from database_related_code.login_user import login_account
 
 app = Flask(__name__)
@@ -34,8 +35,10 @@ def index():
             pass
         else:
             session["user_type"] = "not defined"
+            session["type_login"] = "-"
     except:
         session["user_type"] = "not defined"
+        session["type_login"] = "-"
     counts = {
         "experts": users.count_all()[0],
         "organizations": organizations.count_all()[0],
@@ -43,6 +46,7 @@ def index():
         "enrollments": enrollments.count_all()[0],
     }
     return render_template("pages/index.html", counts=counts)
+
 @app.route("/beheerder/inschrijvingen")
 def beheerder_inschrijvingen():
     # echte inschrijvingen met details uit de database
@@ -81,30 +85,54 @@ def ervaringsdeskunidge_dashboard():
                            page_title="dashboard",
                            description="Ervarings Deskundige Dashboard")
 
-@app.route("/login_check", methods=["GET", "POST"])
-def check_login():
+@app.route("/login_check_user", methods=["GET", "POST"])
+def check_login_user():
     # user type admin = beheerder, user type organization = organisatie, user type expert = ervaringsdeskundige
     if request.method == "GET":
         return redirect("/")
     data = request.form
-    querie =login_account(
+    querie = login_account(
     data["email"],
     data["wachtwoord"])
     check_user = querie.search_user_database()
     if not check_user:
-        return redirect(f"/login?correct={querie.correct}")
+        return redirect(f"/login_users?correct={querie.correct}")
     else:
-        session["user_type"] = check_user
+        session["user_type"] = check_user[0]
+        session["user_id"] = check_user[1]
+    return redirect("/")
+
+@app.route("/login_check_organization", methods=["GET", "POST"])
+def check_login_organization():
+    # user type admin = beheerder, user type organization = organisatie, user type expert = ervaringsdeskundige
+    if request.method == "GET":
+        return redirect("/")
+    data = request.form
+    querie = login_account_organization(
+    data["email"],
+    data["phone"])
+    check_user = querie.search_user_database()
+    if not check_user:
+        return redirect(f"/login_users?correct={querie.correct}")
+    else:
+        session["organization_name"] = check_user[0]
+        session["organization_id"] = check_user[1]
+        session["user_type"] = "organization"
     return redirect("/")
     
-@app.route("/login")
+@app.route("/login_users")
 def login_page():
     correct = request.args.get("correct")
-    return render_template("pages/login/login.html", 
-                           page_title="Login",
-                           description="Login page",
-                           correct=correct)
+    type_of_login = request.args.get("type_login")
+    if type_of_login:
+        session["type_login"] = type_of_login
 
+    return render_template(
+        "pages/login/login.html",
+        page_title="Login",
+        description="Login page",
+        correct=correct
+    )
 
 @app.route("/logout")
 def logout():

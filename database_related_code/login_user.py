@@ -1,7 +1,5 @@
 import sqlite3
 
-
-
 class login_account:
     def __init__(self,attribute1,attribute2):
         self.email = attribute1
@@ -15,8 +13,9 @@ class login_account:
         result = c.fetchall()
         if len(result) == 0:
             self.correct = "no" 
-        else:
-            result = result[0][3]
+            return result
+        user_type = result[0][3]
+        user_id = result[0][0]
         conn.commit()
         conn.close()
-        return result
+        return user_type, user_id
