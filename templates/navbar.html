@@ -19,20 +19,35 @@
           >Home</a
         >
       </li>
-      <li>
-        <a
-          href="{{ url_for('login_page') }}"
-          class="{% if request.endpoint == 'login_page' %}active{% endif %}"
-          >Register/Login</a
-        >
-      </li>
+
+      {% if session.user_type == "admin" %}
       <li>
         <a
           href="{{ url_for('OrganisatieAccount') }}"
           class="{% if request.endpoint == 'OrganisatieAccount' %}active{% endif %}"
           >OrganisatieAccount</a
-        >
+>
       </li>
+      {% endif %}
+
+      {% if session.user_type == "not defined" %}
+      <li>
+        <a
+          href="{{ url_for('login_page') }}"
+          class="{% if request.endpoint == 'login_page' %}active{% endif %}"
+          >Login</a>
+      </li>
+      {% endif %}
+
+      {% if session.user_type != "not defined" %}
+      <li>
+        <a href="{{ url_for('logout') }}"
+          class="{% if request.endpoint == 'logout' %}active{% endif %}">
+          Logout
+        </a>
+      </li>
+      {% endif %}
+
     </ul>
   </div>
 </nav>

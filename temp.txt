@@ -1,0 +1,35 @@
+a simple txt file with code i will need to copy paste often tommorow after merging. When thats completed this file 
+should be deleted. Technically this file never needed to be created in the first place, but this will save time for tommorow.
+
+
+to make sure non admins (beheerders) can't acces certain routes
+
+if session["user_type"] != "admin"
+    return redirect("/")
+
+to make sure people can't acces pages like login_check
+
+if request.method == "GET":
+    return redirect("/")
+
+to only show navbar page when you have a certain user type:
+
+      {% if session.user_type == "admin" %}
+      <li>
+        <a
+          href="{{ url_for('OrganisatieAccount') }}"
+          class="{% if request.endpoint == 'OrganisatieAccount' %}active{% endif %}"
+          >OrganisatieAccount</a
+>
+      </li>
+      {% endif %}
+
+In this case page OrganisatieAccount will only be shown when you are admin
+the 2 sentences to add to code that dont have this yet (but need it) is:
+
+above <li>
+{% if session.user_type == "admin" %}
+
+beaneath </li>
+{% endif %}
+
