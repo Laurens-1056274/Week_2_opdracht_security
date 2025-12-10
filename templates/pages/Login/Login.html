@@ -5,17 +5,17 @@
   {% if session.type_login == "-" %}
   <h2 class="subtitle"> Kies voor wat type account u inlogt </h2>
 
-  <form action="/login_users" method="GET" class="form-card" >
+  <form action="/login" method="GET" class="form-card" >
     <button type="submit" name="type_login" value="user" class="submit-btn">user</button>
   </form>
 
-    <form action="/login_users" method="GET" class="form-card" >
+    <form action="/login" method="GET" class="form-card" >
     <button type="submit" name="type_login" value="organization" class="submit-btn">organization</button>
   </form>
   {% endif %}
 
   {% if session.type_login == "user" %}
-  <h2 class="subtitle"> Vul de onderstaande gegevens in om in te loggen </h2>
+  <h2 class="subtitle"> Vul de onderstaande gegevens in om in te loggen als "user" </h2>
   {% if correct == "no" %}
     <style>
       label {display: block;}
@@ -52,14 +52,15 @@
   {% endif %}
 
 
-    {% if session.type_login == "organization" %}
-  <h2 class="subtitle"> Vul de onderstaande gegevens in om in te loggen </h2>
+  {% if session.type_login == "organization" %}
+  <h2 class="subtitle"> Vul de onderstaande gegevens in om in te loggen als organisatie </h2>
   {% if correct == "no" %}
     <style>
       label {display: block;}
 
       input[type=text],
-      input[type=email] {
+      input[type=email],
+      input[type=tell] {
         width: 100%;
         padding: 12px;
         margin: 10px 0;

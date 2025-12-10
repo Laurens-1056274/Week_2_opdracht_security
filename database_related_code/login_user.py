@@ -6,7 +6,7 @@ class login_account:
         self.password = attribute2
         self.correct = "yes"
 
-    def search_user_database(self):
+    def search_user_database_user(self):
         conn = sqlite3.connect('data/app.db')
         c = conn.cursor()
         c.execute("SELECT * FROM users WHERE email = ? AND password = ? AND status = 'goedgekeurd'", (self.email, self.password))

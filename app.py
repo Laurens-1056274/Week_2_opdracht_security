@@ -94,9 +94,9 @@ def check_login_user():
     querie = login_account(
     data["email"],
     data["wachtwoord"])
-    check_user = querie.search_user_database()
+    check_user = querie.search_user_database_user()
     if not check_user:
-        return redirect(f"/login_users?correct={querie.correct}")
+        return redirect(f"/login?correct={querie.correct}")
     else:
         session["user_type"] = check_user[0]
         session["user_id"] = check_user[1]
@@ -111,16 +111,16 @@ def check_login_organization():
     querie = login_account_organization(
     data["email"],
     data["phone"])
-    check_user = querie.search_user_database()
-    if not check_user:
-        return redirect(f"/login_users?correct={querie.correct}")
+    check_organization = querie.search_user_database_organization()    
+    if not check_organization:
+        return redirect(f"/login?correct={querie.correct}")
     else:
-        session["organization_name"] = check_user[0]
-        session["organization_id"] = check_user[1]
+        session["organization_name"] = check_organization[0]
+        session["organization_id"] = check_organization[1]
         session["user_type"] = "organization"
     return redirect("/")
     
-@app.route("/login_users")
+@app.route("/login")
 def login_page():
     correct = request.args.get("correct")
     type_of_login = request.args.get("type_login")

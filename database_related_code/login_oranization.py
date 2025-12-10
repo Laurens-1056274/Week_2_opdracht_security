@@ -8,13 +8,14 @@ class login_account_organization:
         self.phone = attribute2
         self.correct = "yes"
 
-    def search_user_database(self):
+    def search_user_database_organization(self):
         conn = sqlite3.connect('data/app.db')
         c = conn.cursor()
         c.execute("SELECT * FROM organizations WHERE email = ? AND phone = ?", (self.email, self.phone))
         result = c.fetchall()
         if len(result) == 0:
             self.correct = "no" 
+            return result
         else:
             organization_name = result[0][1]
             organization_id = result[0][0]
