@@ -4,12 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="{{ description }}" />
-
-    <title>{{ page_title | default("Accessibility Hub") }}</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='navbar.css') }}"
+      href="{{ url_for('static', filename='form.css') }}"
     />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='table.css') }}"
+    />
+    <title>{{ page_title | default("Accessibility Hub") }}</title>
   </head>
   <body>
     {% include "navbar.html" %}
@@ -43,5 +46,6 @@
 
   h1 {
     font-size: 1.75rem;
+    padding-bottom: 10px;
   }
 </style>
