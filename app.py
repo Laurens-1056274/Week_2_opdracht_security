@@ -79,6 +79,12 @@ def inschrijving_afkeuren(inschrijving_id):
     enrollments.update_status(inschrijving_id, "afgekeurd")
     return redirect(url_for("beheerder_inschrijvingen"))
 
+@app.route("/ervaringsdeskundige_registratie/int:id>")
+def ervaringsdeskundige_registratie():
+    return render_template("templates/pages/beheerder/registratie_details.html",
+                                    page_title="",
+                                    description="pagina voor het inzien van de registraties van de ervaringsdeskundigen")
+
 @app.route("/ervaringsdeskunidge_dashboard")
 def ervaringsdeskunidge_dashboard():
     return render_template("pages/ervaringsDeskundigeDashboard.html", 
@@ -150,14 +156,6 @@ def OrganisatieAccount():
     return render_template("pages/beheerder/maak_organisatieaccount.html", 
                            page_title="OrganisatieAccount", 
                            description="Pagina om een organisatieaccount aan te maken. Vul het formulier in om een organisatie toe te voegen.")
-
-
-@app.route("/ervaringsdeskundige_registratie/int:id>")
-def ervaringsdeskundige_registratie():
-    return render_template("templates/pages/beheerder/ervaringsdeskundige_registraties.html",
-                                    page_title="",
-                                    description="pagina voor het inzien van de registraties van de ervaringsdeskundigen")
-
 
 @app.route("/submit", methods=["GET", "POST"])
 def submit():
