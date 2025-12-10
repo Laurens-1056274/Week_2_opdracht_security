@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="{{ description }}" />
+
+    <title>{{ page_title | default("Accessibility Hub") }}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='navbar.css') }}"
+    />
+  </head>
+  <body>
+    {% include "navbar.html" %}
+
+    <main class="main-container mt-4">
+      <h1>{{ page_title }}</h1>
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>
+
+<style>
+  body {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
+      sans-serif;
+    font-size: 15px;
+  }
+  .main-container {
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  a {
+    text-decoration: none;
+    transition: 0.4s;
+    padding: 3px;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+</style>
