@@ -7,3 +7,6 @@ https://www.w3schools.com/css/tryit.asp?filename=trycss_form_border
 https://flask.palletsprojects.com/en/stable/quickstart/#sessions
 https://stackoverflow.com/questions/27747578/how-do-i-clear-a-flask-session
 https://www.w3schools.com/tags/tag_iframe.ASP
+
+Mattia:
+https://jinja.palletsprojects.com/en/stable/templates/

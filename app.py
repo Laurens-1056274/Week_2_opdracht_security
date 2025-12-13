@@ -147,7 +147,7 @@ def login_page():
 @app.route("/logout")
 def logout():
     return render_template("pages/login/logout.html", 
-                           page_title="uitloggen", 
+                           page_title="confirmatie uitloggen", 
                            description="Pagina om uit te loggen, klik op de uitloggen knop om uit te loggen.")
 
 @app.route("/clear_session")
