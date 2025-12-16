@@ -1,31 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
+{% extends "base.html" %} {% block content %}
+{% for registratie in registraties %}
+<a href="{{ url_for('registratie_details',  profile_id=profile_id) }}">
 <div>
-    <p>Naam</p>
-    <p>user_id</p>
+    <p>Naam: {{ registratie.first_name }} {{ registratie.last_name }}</p>
+    <p>User ID: {{ registratie.user_id }}</p>
 </div>
+</a>
+{% endfor %}
 
-
-<div>
-    <p>Naam</p>
-    <p>user_id</p>
-</div>
-
-<div>
-    <p>Naam</p>
-    <p>user_id</p>
-</div>
-
-<div>
-    <p>Naam</p>
-    <p>user_id</p>
-</div>
-
-</body>
-</html>
+{% endblock %}

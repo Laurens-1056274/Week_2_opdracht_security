@@ -28,6 +28,12 @@
           >OrganisatieAccount</a
         >
       </li>
+
+        <li>
+            <a
+            href="{{ url_for('registraties_overzicht') }}"
+            class="{% if request.endpoint == 'registraties_overzicht'%}active{% endif %}">Registraties</a>
+        </li>
       {% endif %} {% if session.user_type == "not defined" %}
       <li>
         <a

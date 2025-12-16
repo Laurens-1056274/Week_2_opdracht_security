@@ -5,6 +5,7 @@ from models.user import User
 from models.organization import Organization
 from models.study import Study
 from models.enrollment import Enrollment
+from models.registratie import Registratie
 from database_related_code.add_new_organisationaccount import submit_organisation_account
 from database_related_code.login_oranization import login_account_organization
 from database_related_code.login_user import login_account
@@ -20,6 +21,7 @@ users = User(DB_PATH)
 organizations = Organization(DB_PATH)
 studies = Study(DB_PATH)
 enrollments = Enrollment(DB_PATH)
+Registratie_model = Registratie('./app.db')
 user_role_admin = False
 user_role_organization = False
 user_role_expert = False
@@ -79,11 +81,23 @@ def inschrijving_afkeuren(inschrijving_id):
     enrollments.update_status(inschrijving_id, "afgekeurd")
     return redirect(url_for("beheerder_inschrijvingen"))
 
-@app.route("/ervaringsdeskundige_registratie/int:id>")
-def ervaringsdeskundige_registratie():
-    return render_template("templates/pages/beheerder/registratie_details.html",
-                                    page_title="",
-                                    description="pagina voor het inzien van de registraties van de ervaringsdeskundigen")
+
+@app.route("/registraties_overzicht", methods=["GET"])
+def registraties_overzicht():
+    registraties = Registratie_model.get_all_registraties()
+
+    return render_template("pages/beheerder/registraties_overzicht.html",
+                           page_title="Registraties overzicht",
+                           description="Overzicht van nieuwe registraties",
+                           registraties=registraties)
+
+@app.route("/registratie_details/<int:profile_id>", methods=["GET"])
+def registratie_details(profile_id):
+    profile = Registratie_model.get_profile_details(profile_id)
+    return render_template("pages/beheerder/registratie_details.html",
+                           page_title="Registratie details",
+                           description="Alle data van de deskundige",
+                           profile=profile)
 
 @app.route("/ervaringsdeskunidge_dashboard")
 def ervaringsdeskunidge_dashboard():
