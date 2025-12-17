@@ -56,16 +56,16 @@ def beheerder_inschrijvingen():
     inschrijvingen = []
     for row in rows:
         inschrijvingen.append({
-            "id": row[0],           # inschrijvings-id
-            "naam": row[1],         # voor- en achternaam
-            "organisatie": row[2],  # organisatienaam
-            "onderzoek": row[3],    # onderzoekstitel
-            "status": row[4],       # status
+            "id": row[0],           
+            "naam": row[1],        
+            "organisatie": row[2],  
+            "onderzoek": row[3],   
+            "status": row[4],       
         })
 
-    return render_template(
-        "beheerder_inschrijvingen.html",
-        inschrijvingen=inschrijvingen
+    return render_template( "pages/beheerder/beheerder_inschrijvingen.html", 
+                           page_title="BeheerderInschrijvingen",
+                           inschrijvingen=inschrijvingen
     )
 @app.route("/beheerder/inschrijvingen/<int:inschrijving_id>/goedkeuren")
 def inschrijving_goedkeuren(inschrijving_id):
@@ -82,13 +82,12 @@ def inschrijving_afkeuren(inschrijving_id):
 
 @app.route("/ervaringsdeskunidge_dashboard")
 def ervaringsdeskunidge_dashboard():
-    return render_template("pages/ervaringsDeskundigeDashboard.html", 
+    return render_template("pages/beheerder/ervaringsDeskundigeDashboard.html", 
                            page_title="dashboard",
                            description="Ervarings Deskundige Dashboard")
 
 @app.route("/login_check_user", methods=["GET", "POST"])
 def check_login_user():
-    # user type admin = beheerder, user type organization = organisatie, user type expert = ervaringsdeskundige
     if request.method == "GET":
         return redirect("/")
     data = request.form
@@ -105,7 +104,6 @@ def check_login_user():
 
 @app.route("/login_check_organization", methods=["GET", "POST"])
 def check_login_organization():
-    # user type admin = beheerder, user type organization = organisatie, user type expert = ervaringsdeskundige
     if request.method == "GET":
         return redirect("/")
     data = request.form
