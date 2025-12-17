@@ -155,9 +155,11 @@ def clear_session():
     
 @app.route("/OrganisatieAccount")
 def OrganisatieAccount():
+    correct = request.args.get("correct")
     return render_template("pages/beheerder/maak_organisatieaccount.html", 
                            page_title="OrganisatieAccount", 
-                           description="Pagina om een organisatieaccount aan te maken. Vul het formulier in om een organisatie toe te voegen.")
+                           description="Pagina om een organisatieaccount aan te maken. Vul het formulier in om een organisatie toe te voegen.",
+                           correct=correct)
 
 
 @app.route("/submit", methods=["GET", "POST"])
@@ -165,7 +167,7 @@ def submit():
     if request.method == "GET":
         return redirect("/")
     data = request.form
-    submit_organisation_account(
+    add_to_database = submit_organisation_account(
     data["name"],
     data["type"],
     data["website"],
@@ -175,7 +177,11 @@ def submit():
     data["phone"],
     data["details"]
     ).add_to_database()
-    return redirect("/OrganisatieAccount")
+    if add_to_database == "no":
+        print("account already exist")
+        return redirect(f"/OrganisatieAccount?correct=no")
+    print("new account")
+    return redirect(f"/OrganisatieAccount?correct=yes")
 
 if __name__ == "__main__":
     app.run(debug=True)
