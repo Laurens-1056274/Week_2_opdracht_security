@@ -1,8 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+{% extends "base.html" %} {% block content %}
+
 
     <style>
     table, th, td {
@@ -28,6 +25,10 @@
             <th class ="main-header" colspan ="2" >Persoonsgegevens</th>
         </tr>
         <tr>
+            <th>gebruikers id</th>
+            <td>{{ profile.user_id }}</td>
+        </tr>
+        <tr>
             <th>Voornaam</th>
             <td>{{ profile.first_name }}</td>
         </tr>
@@ -36,32 +37,36 @@
             <td>{{ profile.last_name }}</td>
         </tr>
         <tr>
-            <th>Geboortedatum</th>
-            <td>{{ profile.birth_date }}</td>
+            <th>Postcode</th>
+            <td>{{ profile.postcode }}</td>
         </tr>
         <tr>
             <th>Geslacht</th>
             <td>{{ profile.gender }}</td>
         </tr>
         <tr>
-            <th>E-mail adres</th>
-            <td>waarde</td>
-        </tr>
-        <tr>
             <th>Telefoon nummer</th>
             <td>{{ profile.phone }}</td>
         </tr>
         <tr>
-            <th>Straat en huisnummer</th>
-            <td>waarde</td>
+            <th>Geboortedatum</th>
+            <td>{{ profile.birth_date }}</td>
         </tr>
         <tr>
-            <th>Postcode</th>
-            <td>{{ profile.postcode }}</td>
+            <th>Hulpmiddelen</th>
+            <td>{{ profile.assisitive_tools }}</td>
         </tr>
         <tr>
-            <th>Stad</th>
-            <td>waarde</td>
+            <th>Intro</th>
+            <td>{{ profile.intro }}</td>
+        </tr>
+        <tr>
+            <th>Notities</th>
+            <td>{{ profile.notes }}</td>
+        </tr>
+        <tr>
+            <th>Voorwaarden</th>
+            <td>{{ profile.agreed_terms }}</td>
         </tr>
     </table>
 <br>
@@ -85,12 +90,32 @@
             <th class ="main-header" colspan ="2">toezichthouder</th>
         </tb>
         <tr>
-            <th>Gegevens</th>
-            <td>Waarde</td>
+            <th>Naam</th>
+            <td>{{ profile.guardian_name }}</td>
+        </tr>
+        <tr>
+            <th>e-mail</th>
+            <td>{{ profile.guardian_email }}</td>
+        </tr>
+        <tr>
+            <th>Telefoon nummer</th>
+            <td>{{ profile.guardian_phone }}</td>
+        </tr>
+        <tr>
+            <th>contact voorkeur</th>
+            <td>{{ profile.contact_preference }}</td>
+        </tr>
+        <tr>
+            <th>voorkeur studie type</th>
+            <td>{{ profile.preferred_study_type }}</td>
+        </tr>
+        <tr>
+            <th>beschikbaarheid</th>
+            <td>{{ profile.availability }}</td>
         </tr>
     </table>
 <br>
 <button type = "button "> goedkeuren </button>
 <button type = "button"> afkeuren </button>
-</body>
-</html>
+
+{% endblock %}
