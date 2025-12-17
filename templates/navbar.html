@@ -35,6 +35,13 @@
           >
         </li>
         {% endif %} {% if session.user_type != "not defined" %}
+        <li>
+          <a
+            href="{{ url_for('onderzoeken') }}"
+            class="{% if request.endpoint == 'onderzoeken' %}active{% endif %}"
+            >Onderzoeken</a
+          >
+        </li>
       </div>
       <li>
         <a
@@ -45,12 +52,6 @@
         </a>
       </li>
 
-      <li>
-        <a
-          href="{{ url_for('onderzoeken') }}"
-          class="{% if request.endpoint == 'onderzoeken' %}active{% endif %}"
-        >Onderzoeken</a>
-      </li>
       {% endif %}
     </ul>
   </div>
