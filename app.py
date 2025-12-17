@@ -186,6 +186,17 @@ def onderzoeken():
 
     return render_template("pages/beheerder/onderzoeken.html", beoordelen=beoordelen)
 
+@app.route("/beheerder/onderzoeken/<int:onderzoek_id>/goedkeuren")
+def onderzoek_goedkeuren(onderzoek_id):
+    studies.update_status(onderzoek_id, "goedgekeurd")
+    return redirect(url_for("onderzoeken"))    
+    
+
+@app.route("/beheerder/onderzoeken/<int:onderzoek_id>/afkeuren")
+def onderzoek_afkeuren(onderzoek_id):
+    studies.update_status(onderzoek_id, "afgekeurd")
+    return redirect(url_for("onderzoeken"))
+
 
 
 if __name__ == "__main__":

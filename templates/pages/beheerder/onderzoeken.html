@@ -34,25 +34,34 @@
         <tbody>
           {% for onderzoek in beoordelen %}
           <tr>
-            <td>{{ onderzoek["id"] }}</td>
-            <td>{{ onderzoek["organization_id"] }}</td>
-            <td>{{ onderzoek["org_name"] }}</td>
-            <td>{{ onderzoek["title"] }}</td>
-            <td>{{ onderzoek["status"] }}</td>
-            <td>{{ onderzoek["available"] }}</td>
-            <td>{{ onderzoek["description"] }}</td>
-            <td>{{ onderzoek["start_date"] }}</td>
-            <td>{{ onderzoek["end_date"] }}</td>
-            <td>{{ onderzoek["study_type"] }}</td>
-            <td>{{ onderzoek["location"] }}</td>
-            <td>{{ onderzoek["has_reward"] }}</td>
-            <td>{{ onderzoek["reward"] }}</td>
-            <td>{{ onderzoek["age_min"] }}</td>
-            <td>{{ onderzoek["age_max"] }}</td>
+            <td>{{ onderzoek.id }}</td>
+            <td>{{ onderzoek.organization_id }}</td>
+            <td>{{ onderzoek.org_name }}</td>
+            <td>{{ onderzoek.title }}</td>
+            <td>{{ onderzoek.status }}</td>
+            <td>{{ onderzoek.available }}</td>
+            <td>{{ onderzoek.description }}</td>
+            <td>{{ onderzoek.start_date }}</td>
+            <td>{{ onderzoek.end_date }}</td>
+            <td>{{ onderzoek.study_type }}</td>
+            <td>{{ onderzoek.location }}</td>
+            <td>{{ onderzoek.has_reward }}</td>
+            <td>{{ onderzoek.reward }}</td>
+            <td>{{ onderzoek.age_min }}</td>
+            <td>{{ onderzoek.age_max }}</td>
+            <td>
+              <a href="/beheerder/onderzoeken/{{ onderzoek.id }}/goedkeuren">
+                <button class=goedkeuren>Goedkeuren</button>
+              </a>
+              <a href="/beheerder/onderzoeken/{{ onderzoek.id }}/afkeuren">
+                <button class=afkeuren>Afkeuren</button>
+              </a>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
+      
     </div>
   {% else %}
     <p>Er zijn momenteel geen onderzoeken om te beoordelen.</p>
@@ -95,6 +104,26 @@
   .studies-table thead {
     background: #f5f7fb;
   }
+  
+  .goedkeuren {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+
+  .afkeuren {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
 </style>
 
 {% endblock %}
