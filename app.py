@@ -79,7 +79,6 @@ def inschrijving_afkeuren(inschrijving_id):
     enrollments.update_status(inschrijving_id, "afgekeurd")
     return redirect(url_for("beheerder_inschrijvingen"))
 
-#############################################################################################################################
 
 @app.route("/beheerder_dashboard")
 def beheerder_dashboard():
@@ -87,7 +86,6 @@ def beheerder_dashboard():
                            page_title="dashboard voor beheerder",
                            description="Beheerder Dashboard")
 
-#############################################################################################################################
 
 @app.route("/ervaringsdeskunidge_dashboard")
 def ervaringsdeskunidge_dashboard():
