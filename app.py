@@ -177,7 +177,7 @@ def submit():
     data["phone"],
     data["details"]
     ).add_to_database()
-    return redirect("/")
+    return redirect("/OrganisatieAccount")
 
 if __name__ == "__main__":
     app.run(debug=True)

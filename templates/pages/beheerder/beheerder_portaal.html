@@ -1,9 +1,46 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
-<iframe src="http://127.0.0.1:5000/OrganisatieAccount" name="OrganisatieAccount" width="800" height="800"></iframe>
+<style>
+  select.navbar {
+    display: none;
+  }
+</style>
 
-<iframe src="http://127.0.0.1:5000/beheerder/inschrijvingen" name="beheerder inschrijvingen" width="800" height="800"></iframe>
+<iframe
+  src="http://127.0.0.1:5000/OrganisatieAccount"
+  name="OrganisatieAccount"
+  width="800"
+  height="800"
+  style="border: none"
+>
+</iframe>
 
+<iframe
+  src="http://127.0.0.1:5000/beheerder/inschrijvingen"
+  name="beheerder_inschrijvingen"
+  width="800"
+  height="800"
+  style="border: none"
+>
+</iframe>
+
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("iframe").forEach((iframe) => {
+      iframe.addEventListener("load", () => {
+        try {
+          const doc = iframe.contentDocument || iframe.contentWindow.document;
+          const navbar = doc.querySelector(".navbar");
+          if (navbar) {
+            navbar.style.display = "none";
+          }
+        } catch (e) {
+          console.warn("Cannot access iframe:", e);
+        }
+      });
+    });
+  });
+</script>
 
 {% endblock %}

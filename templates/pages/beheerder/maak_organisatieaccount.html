@@ -93,7 +93,13 @@
       ></textarea>
     </div>
 
-    <button type="submit" class="submit-btn">Verzenden</button>
+    <button type="submit" class="submit-btn" onclick="myAlert()">Verzenden</button>
   </form>
 </div>
+
+<script>
+function myAlert() {
+  alert("Organisatie is succesvol toegevoegt!");
+}
+</script>
 {% endblock %}
