@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="studies-container">
+  <h2 class="page-title">Onderzoeken beoordelen</h2>
+  <p class="page-subtitle">
+    Hieronder zie je alle onderzoeken. Keur ze goed of af.
+  </p>
+
+  {% if beoordelen %}
+    <div class="table-card">
+      <table class="studies-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Organisation_ID</th>
+            <th>Organisatie</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Available</th>
+            <th>Description</th>
+            <th>Start_date</th>
+            <th>End_date</th>
+            <th>Study_type</th>
+            <th>Location</th>
+            <th>Has_reward</th>
+            <th>Reward</th>
+            <th>Age_min</th>
+            <th>Age_max</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for onderzoek in beoordelen %}
+          <tr>
+            <td>{{ onderzoek["id"] }}</td>
+            <td>{{ onderzoek["organization_id"] }}</td>
+            <td>{{ onderzoek["org_name"] }}</td>
+            <td>{{ onderzoek["title"] }}</td>
+            <td>{{ onderzoek["status"] }}</td>
+            <td>{{ onderzoek["available"] }}</td>
+            <td>{{ onderzoek["description"] }}</td>
+            <td>{{ onderzoek["start_date"] }}</td>
+            <td>{{ onderzoek["end_date"] }}</td>
+            <td>{{ onderzoek["study_type"] }}</td>
+            <td>{{ onderzoek["location"] }}</td>
+            <td>{{ onderzoek["has_reward"] }}</td>
+            <td>{{ onderzoek["reward"] }}</td>
+            <td>{{ onderzoek["age_min"] }}</td>
+            <td>{{ onderzoek["age_max"] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p>Er zijn momenteel geen onderzoeken om te beoordelen.</p>
+  {% endif %}
+
+</div>
+
+<style>
+  .studies-container {
+    max-width: 70em;
+    margin: 0 auto;
+    padding: 2em;
+  }
+
+  .page-title {
+    font-size: 1.6rem;
+    margin-bottom: 0.2em;
+  }
+
+  .page-subtitle {
+    color: #666;
+    margin-bottom: 1.5em;
+  }
+
+  .table-card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e2e2e2;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    padding: 1.5em;
+    overflow-x: auto;
+  }
+
+  .studies-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+
+  .studies-table thead {
+    background: #f5f7fb;
+  }
+</style>
+
+{% endblock %}
