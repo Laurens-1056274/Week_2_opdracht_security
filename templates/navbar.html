@@ -44,6 +44,13 @@
           Logout
         </a>
       </li>
+
+      <li>
+        <a
+          href="{{ url_for('onderzoeken') }}"
+          class="{% if request.endpoint == 'onderzoeken' %}active{% endif %}"
+        >Onderzoeken</a>
+      </li>
       {% endif %}
     </ul>
   </div>

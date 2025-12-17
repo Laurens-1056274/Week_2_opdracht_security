@@ -23,6 +23,7 @@ enrollments = Enrollment(DB_PATH)
 user_role_admin = False
 user_role_organization = False
 user_role_expert = False
+db = Database("data/app.db")
 
 @app.route("/")
 def index():
@@ -165,6 +166,36 @@ def submit():
     data["details"]
     ).add_to_database()
     return redirect("/")
+
+@app.route("/onderzoeken")
+def onderzoeken():
+    conn = db.connect()
+    beoordelen = conn.execute("""
+    SELECT
+      s.id, s.organization_id, s.title, s.status, s.available, s.description,
+      s.start_date, s.end_date, s.study_type, s.location, s.has_reward, s.reward,
+      s.age_min, s.age_max,
+      o.name AS org_name
+    FROM studies s
+    JOIN organizations o ON o.id = s.organization_id
+    ORDER BY s.start_date DESC
+    """).fetchall()
+    conn.close()
+
+    return render_template("pages/beheerder/onderzoeken.html", beoordelen=beoordelen)
+
+@app.route("/beheerder/onderzoeken/<int:onderzoek_id>/goedkeuren")
+def onderzoek_goedkeuren(onderzoek_id):
+    studies.update_status(onderzoek_id, "goedgekeurd")
+    return redirect(url_for("onderzoeken"))    
+    
+
+@app.route("/beheerder/onderzoeken/<int:onderzoek_id>/afkeuren")
+def onderzoek_afkeuren(onderzoek_id):
+    studies.update_status(onderzoek_id, "afgekeurd")
+    return redirect(url_for("onderzoeken"))
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

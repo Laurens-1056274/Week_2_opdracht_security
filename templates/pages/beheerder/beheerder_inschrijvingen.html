@@ -1,35 +1,47 @@
-{% extends "base.html" %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Inschrijvingen beheren</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='table.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Inschrijvingen beheren</h1>
 
-<h2 class="subtitle">Pas hier de inschrijvingen aan</h2>
-<div class="table-container">
-  <table>
-    <tr>
-      <th>ID</th>
-      <th>Naam</th>
-      <th>Organisatie</th>
-      <th>Onderzoek</th>
-      <th>Status</th>
-      <th>Acties</th>
-    </tr>
+    <div class="table-container">
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Naam</th>
+          <th>Organisatie</th>
+          <th>Onderzoek</th>
+          <th>Status</th>
+          <th>Acties</th>
+        </tr>
 
-    {% for inschrijving in inschrijvingen %}
-    <tr>
-      <td>{{ inschrijving.id }}</td>
-      <td>{{ inschrijving.naam }}</td>
-      <td>{{ inschrijving.organisatie }}</td>
-      <td>{{ inschrijving.onderzoek }}</td>
-      <td>{{ inschrijving.status }}</td>
-      <td>
-        <a href="/beheerder/inschrijvingen/{{ inschrijving.id }}/goedkeuren">
-          <button class="action-btn goedkeuren">Goedkeuren</button>
-        </a>
-        <a href="/beheerder/inschrijvingen/{{ inschrijving.id }}/afkeuren">
-          <button class="action-btn afkeuren">Afkeuren</button>
-        </a>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
-</div>
-
-{% endblock %}
+        {% for inschrijving in inschrijvingen %}
+        <tr>
+          <td>{{ inschrijving.id }}</td>
+          <td>{{ inschrijving.naam }}</td>
+          <td>{{ inschrijving.organisatie }}</td>
+          <td>{{ inschrijving.onderzoek }}</td>
+          <td>{{ inschrijving.status }}</td>
+          <td>
+            <a
+              href="/beheerder/inschrijvingen/{{ inschrijving.id }}/goedkeuren"
+            >
+              <button class="action-btn goedkeuren">Goedkeuren</button>
+            </a>
+            <a href="/beheerder/inschrijvingen/{{ inschrijving.id }}/afkeuren">
+              <button class="action-btn afkeuren">Afkeuren</button>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </body>
+</html>
