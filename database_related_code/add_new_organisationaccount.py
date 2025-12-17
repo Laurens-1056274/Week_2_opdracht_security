@@ -17,6 +17,14 @@ class submit_organisation_account:
     def add_to_database(self):
         conn = sqlite3.connect('data/app.db')
         c = conn.cursor()
+
+
+        c.execute("SELECT * FROM organizations WHERE email = ? AND phone = ?",(self.email,self.phone))
+        result = c.fetchall()
+        if len(result) >1:
+            print("gebruiker bestaat al")
+            return
+
         c.execute("INSERT INTO organizations (name,type,website,description,contact_person,email,phone,details)" \
         "VALUES (?,?,?,?,?,?,?,?)",(self.name,self.type,self.website,self.description,self.contact_person,self.email,self.phone,self.details))
         conn.commit()
