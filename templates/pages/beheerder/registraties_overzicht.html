@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block content %}
 {% for registratie in registraties %}
-<a href="{{ url_for('registratie_details',  profile_id=profile_id) }}">
+<a href="{{ url_for('registratie_details', profile_id=registratie.user_id) }}">
 <div>
     <p>Naam: {{ registratie.first_name }} {{ registratie.last_name }}</p>
     <p>User ID: {{ registratie.user_id }}</p>

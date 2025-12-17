@@ -10,10 +10,15 @@ class Registratie:
         cursor.execute("SELECT user_id, first_name, last_name FROM profiles")
         return cursor.fetchall()
 
-    def get_profile_details(self):
+    def get_profile_details(self, profile_id):
         con = self.db.connect()
         cursor = con.cursor()
-        cursor.execute("SELECT * FROM profiles")
-        return cursor.fetchall()
+        cursor.execute(
+            "SELECT * FROM profiles WHERE user_id = ?",
+            (profile_id,)
+        )
+        return cursor.fetchone()
+
+
 
 
