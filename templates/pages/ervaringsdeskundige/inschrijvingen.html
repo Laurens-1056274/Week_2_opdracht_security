@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mijn inschrijvingen</title>
+</head>
+<body>
+    <h1>Mijn inschrijvingen</h1>
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Onderzoek</th>
+            <th>Status</th>
+        </tr>
+
+        {% for i in inschrijvingen %}
+        <tr>
+            <td>{{ i["id"] }}</td>
+            <td>{{ i["title"] }}</td>
+            <td>{{ i["status"] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
