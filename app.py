@@ -50,9 +50,7 @@ def index():
 
 @app.route("/beheerder/inschrijvingen")
 def beheerder_inschrijvingen():
-    # echte inschrijvingen met details uit de database
     rows = enrollments.all_with_details()
-
     inschrijvingen = []
     for row in rows:
         inschrijvingen.append({
@@ -62,21 +60,18 @@ def beheerder_inschrijvingen():
             "onderzoek": row[3],   
             "status": row[4],       
         })
-
     return render_template( "pages/beheerder/beheerder_inschrijvingen.html", 
                            page_title="BeheerderInschrijvingen",
                            inschrijvingen=inschrijvingen
     )
 @app.route("/beheerder/inschrijvingen/<int:inschrijving_id>/goedkeuren")
 def inschrijving_goedkeuren(inschrijving_id):
-    # status aanpassen naar goedgekeurd
     enrollments.update_status(inschrijving_id, "goedgekeurd")
     return redirect(url_for("beheerder_inschrijvingen"))
 
 
 @app.route("/beheerder/inschrijvingen/<int:inschrijving_id>/afkeuren")
 def inschrijving_afkeuren(inschrijving_id):
-    # status aanpassen naar afgekeurd
     enrollments.update_status(inschrijving_id, "afgekeurd")
     return redirect(url_for("beheerder_inschrijvingen"))
 
@@ -195,6 +190,17 @@ def onderzoek_afkeuren(onderzoek_id):
     studies.update_status(onderzoek_id, "afgekeurd")
     return redirect(url_for("onderzoeken"))
 
+@app.route("/ervaringsdeskundige/inschrijvingen")
+def ervaringsdeskundige_inschrijvingen():
+    profile_id = session.get("user_id")
+
+    if profile_id is None:
+        return redirect("/login")
+    rows = enrollments.all_for_profile(profile_id)
+    return render_template(
+        "pages/ervaringsdeskundige/inschrijvingen.html",
+        inschrijvingen=rows
+    )
 
 
 if __name__ == "__main__":
