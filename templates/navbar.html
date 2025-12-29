@@ -35,11 +35,23 @@
         {% endif %}
 
         {% if session.user_type == "expert" %}
-        <li>
-          <a href="{{ url_for('ervaringsdeskundige_inschrijvingen') }}">
+          <li>
+          <a
+            href="{{ url_for('ervaringsdeskundige_inschrijvingen') }}"
+            class="{% if request.endpoint == 'ervaringsdeskundige_inschrijvingen' %}active{% endif %}"
+          >
             Mijn inschrijvingen
           </a>
         </li>
+        <li>
+          <a
+            href="{{ url_for('ervaringsdeskundige_profiel') }}"
+            class="{% if request.endpoint == 'ervaringsdeskundige_profiel' %}active{% endif %}"
+          >
+            Profiel
+          </a>
+        </li>
+
         {% endif %}
 
         {% if session.user_type == "not defined" %}

@@ -12,7 +12,7 @@ class Enrollment:
             con.commit()
             return cur.fetchone()
 
-    # alle inschrijvingen
+
     def all_with_details(self):
         with self.db.connect() as con:
             cur = con.cursor()
@@ -31,7 +31,6 @@ class Enrollment:
             rows = cur.fetchall()
             return rows
 
-    # inschrijving aanpassen
     def update_status(self, enrollment_id: int, new_status: str):
         with self.db.connect() as con:
             cur = con.cursor()

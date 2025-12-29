@@ -192,14 +192,45 @@ def onderzoek_afkeuren(onderzoek_id):
 
 @app.route("/ervaringsdeskundige/inschrijvingen")
 def ervaringsdeskundige_inschrijvingen():
-    profile_id = session.get("user_id")
-
-    if profile_id is None:
+    user_id = session.get("user_id")
+    if user_id is None:
         return redirect("/login")
+    if session.get("user_type") != "expert":
+        return redirect("/")
+    profile_id = users.get_profile_id(user_id)
+    if profile_id is None:
+        return redirect("/")
+
     rows = enrollments.all_for_profile(profile_id)
+
     return render_template(
         "pages/ervaringsdeskundige/inschrijvingen.html",
         inschrijvingen=rows
+    )
+@app.route("/ervaringsdeskundige/profiel", methods=["GET", "POST"])
+def ervaringsdeskundige_profiel():
+    user_id = session.get("user_id")
+    if user_id is None:
+        return redirect("/login")
+    if session.get("user_type") != "expert":
+        return redirect("/")
+    if request.method == "POST":
+        users.update_profile(
+            user_id=user_id,
+            first_name=request.form.get("first_name"),
+            last_name=request.form.get("last_name"),
+            postcode=request.form.get("postcode"),
+            phone=request.form.get("phone"),
+            intro=request.form.get("intro")
+        )
+        return redirect("/ervaringsdeskundige/profiel")
+    profiel = users.profile_by_user_id(user_id)
+    if profiel is None:
+        return redirect("/")
+
+    return render_template(
+        "pages/ervaringsdeskundige/profiel.html",
+        profiel=profiel
     )
 
 
