@@ -6,8 +6,9 @@
           <a
             href="{{ url_for('index') }}"
             class="{% if request.endpoint == 'index' %}active{% endif %}"
-            >Home</a
           >
+            Home
+          </a>
         </li>
 
         {% if session.user_type == "admin" %}
@@ -15,34 +16,57 @@
           <a
             href="{{ url_for('OrganisatieAccount') }}"
             class="{% if request.endpoint == 'OrganisatieAccount' %}active{% endif %}"
-            >OrganisatieAccount</a
           >
+            OrganisatieAccount
+          </a>
         </li>
-        {% endif %} {% if session.user_type == "not defined" %}
+
+        <li>
+          <a href="{{ url_for('beheerder_inschrijvingen') }}">
+            Inschrijvingen
+          </a>
+        </li>
+
+        <li>
+          <a href="{{ url_for('onderzoeken') }}">
+            Onderzoeken
+          </a>
+        </li>
+        {% endif %}
+
+        {% if session.user_type == "expert" %}
+          <li>
+          <a
+            href="{{ url_for('ervaringsdeskundige_inschrijvingen') }}"
+            class="{% if request.endpoint == 'ervaringsdeskundige_inschrijvingen' %}active{% endif %}"
+          >
+            Mijn inschrijvingen
+          </a>
+        </li>
+        <li>
+          <a
+            href="{{ url_for('ervaringsdeskundige_profiel') }}"
+            class="{% if request.endpoint == 'ervaringsdeskundige_profiel' %}active{% endif %}"
+          >
+            Profiel
+          </a>
+        </li>
+
+        {% endif %}
+
+        {% if session.user_type == "not defined" %}
         <li>
           <a
             href="{{ url_for('login_page') }}"
             class="{% if request.endpoint == 'login_page' %}active{% endif %}"
-            >Login</a
           >
+            Login
+          </a>
         </li>
-        {% endif %} {% if session.user_type != "not defined" %}
-        <li>
-          <a
-            href="{{ url_for('beheerder_inschrijvingen') }}"
-            class="{% if request.endpoint == 'login_page' %}active{% endif %}"
-            >Inschrijvingen</a
-          >
-        </li>
-        {% endif %} {% if session.user_type != "not defined" %}
-        <li>
-          <a
-            href="{{ url_for('onderzoeken') }}"
-            class="{% if request.endpoint == 'onderzoeken' %}active{% endif %}"
-            >Onderzoeken</a
-          >
-        </li>
+        {% endif %}
       </div>
+
+      {% if session.user_type != "not defined" %}
       <li>
         <a
           href="{{ url_for('logout') }}"
@@ -51,7 +75,6 @@
           Logout
         </a>
       </li>
-
       {% endif %}
     </ul>
   </div>
