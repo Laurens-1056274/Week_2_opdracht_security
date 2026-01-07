@@ -23,6 +23,7 @@ enrollments = Enrollment(DB_PATH)
 user_role_admin = False
 user_role_organization = False
 user_role_expert = False
+db = Database("data/app.db")
 
 @app.route("/")
 def index():
@@ -49,33 +50,28 @@ def index():
 
 @app.route("/beheerder/inschrijvingen")
 def beheerder_inschrijvingen():
-    # echte inschrijvingen met details uit de database
     rows = enrollments.all_with_details()
-
     inschrijvingen = []
     for row in rows:
         inschrijvingen.append({
-            "id": row[0],           # inschrijvings-id
-            "naam": row[1],         # voor- en achternaam
-            "organisatie": row[2],  # organisatienaam
-            "onderzoek": row[3],    # onderzoekstitel
-            "status": row[4],       # status
+            "id": row[0],           
+            "naam": row[1],        
+            "organisatie": row[2],  
+            "onderzoek": row[3],   
+            "status": row[4],       
         })
-
-    return render_template(
-        "beheerder_inschrijvingen.html",
-        inschrijvingen=inschrijvingen
+    return render_template( "pages/beheerder/beheerder_inschrijvingen.html", 
+                           page_title="BeheerderInschrijvingen",
+                           inschrijvingen=inschrijvingen
     )
 @app.route("/beheerder/inschrijvingen/<int:inschrijving_id>/goedkeuren")
 def inschrijving_goedkeuren(inschrijving_id):
-    # status aanpassen naar goedgekeurd
     enrollments.update_status(inschrijving_id, "goedgekeurd")
     return redirect(url_for("beheerder_inschrijvingen"))
 
 
 @app.route("/beheerder/inschrijvingen/<int:inschrijving_id>/afkeuren")
 def inschrijving_afkeuren(inschrijving_id):
-    # status aanpassen naar afgekeurd
     enrollments.update_status(inschrijving_id, "afgekeurd")
     return redirect(url_for("beheerder_inschrijvingen"))
 
@@ -89,13 +85,12 @@ def beheerder_dashboard():
 
 @app.route("/ervaringsdeskunidge_dashboard")
 def ervaringsdeskunidge_dashboard():
-    return render_template("pages/ervaringsDeskundigeDashboard.html", 
+    return render_template("pages/beheerder/ervaringsDeskundigeDashboard.html", 
                            page_title="dashboard",
                            description="Ervarings Deskundige Dashboard")
 
 @app.route("/login_check_user", methods=["GET", "POST"])
 def check_login_user():
-    # user type admin = beheerder, user type organization = organisatie, user type expert = ervaringsdeskundige
     if request.method == "GET":
         return redirect("/")
     data = request.form
@@ -112,7 +107,6 @@ def check_login_user():
 
 @app.route("/login_check_organization", methods=["GET", "POST"])
 def check_login_organization():
-    # user type admin = beheerder, user type organization = organisatie, user type expert = ervaringsdeskundige
     if request.method == "GET":
         return redirect("/")
     data = request.form
@@ -182,6 +176,78 @@ def submit():
         return redirect(f"/OrganisatieAccount?correct=no")
     print("new account")
     return redirect(f"/OrganisatieAccount?correct=yes")
+
+@app.route("/onderzoeken")
+def onderzoeken():
+    conn = db.connect()
+    beoordelen = conn.execute("""
+    SELECT
+      s.id, s.organization_id, s.title, s.status, s.available, s.description,
+      s.start_date, s.end_date, s.study_type, s.location, s.has_reward, s.reward,
+      s.age_min, s.age_max,
+      o.name AS org_name
+    FROM studies s
+    JOIN organizations o ON o.id = s.organization_id
+    ORDER BY s.start_date DESC
+    """).fetchall()
+    conn.close()
+
+    return render_template("pages/beheerder/onderzoeken.html", beoordelen=beoordelen)
+
+@app.route("/beheerder/onderzoeken/<int:onderzoek_id>/goedkeuren")
+def onderzoek_goedkeuren(onderzoek_id):
+    studies.update_status(onderzoek_id, "goedgekeurd")
+    return redirect(url_for("onderzoeken"))    
+    
+
+@app.route("/beheerder/onderzoeken/<int:onderzoek_id>/afkeuren")
+def onderzoek_afkeuren(onderzoek_id):
+    studies.update_status(onderzoek_id, "afgekeurd")
+    return redirect(url_for("onderzoeken"))
+
+@app.route("/ervaringsdeskundige/inschrijvingen")
+def ervaringsdeskundige_inschrijvingen():
+    user_id = session.get("user_id")
+    if user_id is None:
+        return redirect("/login")
+    if session.get("user_type") != "expert":
+        return redirect("/")
+    profile_id = users.get_profile_id(user_id)
+    if profile_id is None:
+        return redirect("/")
+
+    rows = enrollments.all_for_profile(profile_id)
+
+    return render_template(
+        "pages/ervaringsdeskundige/inschrijvingen.html",
+        inschrijvingen=rows
+    )
+@app.route("/ervaringsdeskundige/profiel", methods=["GET", "POST"])
+def ervaringsdeskundige_profiel():
+    user_id = session.get("user_id")
+    if user_id is None:
+        return redirect("/login")
+    if session.get("user_type") != "expert":
+        return redirect("/")
+    if request.method == "POST":
+        users.update_profile(
+            user_id=user_id,
+            first_name=request.form.get("first_name"),
+            last_name=request.form.get("last_name"),
+            postcode=request.form.get("postcode"),
+            phone=request.form.get("phone"),
+            intro=request.form.get("intro")
+        )
+        return redirect("/ervaringsdeskundige/profiel")
+    profiel = users.profile_by_user_id(user_id)
+    if profiel is None:
+        return redirect("/")
+
+    return render_template(
+        "pages/ervaringsdeskundige/profiel.html",
+        profiel=profiel
+    )
+
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Profiel overzicht</h1>
+
+<p>Hier kun je je persoonlijke gegevens bekijken en aanpassen</p>
+
+<form method="POST">
+    <label>Voornaam</label><br>
+    <input type="text" name="first_name" value="{{ profiel['first_name'] or '' }}"><br><br>
+
+    <label>Achternaam</label><br>
+    <input type="text" name="last_name" value="{{ profiel['last_name'] or '' }}"><br><br>
+
+    <label>Postcode</label><br>
+    <input type="text" name="postcode" value="{{ profiel['postcode'] or '' }}"><br><br>
+
+    <label>Telefoon</label><br>
+    <input type="text" name="phone" value="{{ profiel['phone'] or '' }}"><br><br>
+
+    <label>Intro</label><br>
+    <textarea name="intro" rows="4">{{ profiel['intro'] or '' }}</textarea><br><br>
+
+    <button type="submit">Opslaan</button>
+</form>
+
+{% endblock %}
