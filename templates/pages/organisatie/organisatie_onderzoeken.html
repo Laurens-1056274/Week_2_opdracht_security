@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% block content %}
+
+<h2 class="subtitle">Onderzoek aanmaken</h2>
+<div class="table-container">
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Organisatie_id</th>
+      <th>Title</th>
+      <th>status</th>
+      <th>available</th>
+      <th>description</th>
+      <th>start_date</th>
+      <th>end_date</th>
+      <th>study_type</th>
+      <th>location</th>
+      <th>Reward(?)</th>
+    </tr>
+
+    {% for onderzoeken in onderzoeken %}
+    <tr>
+      <td>{{ onderzoeken.id }}</td>
+      <td>{{ onderzoeken.naam }}</td>
+      <td>{{ onderzoeken.organisatie }}</td>
+      <td>{{ onderzoeken.onderzoek }}</td>
+      <td>{{ onderzoeken.status }}</td>
+      <td>{{ onderzoeken.status }}</td>
+      <td>{{ onderzoeken.status }}</td>
+      <td>{{ onderzoeken.status }}</td>
+      <td>{{ onderzoeken.status }}</td>
+      <td>{{ onderzoeken.status }}</td>
+      <td>{{ onderzoeken.status }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+{% endblock %}

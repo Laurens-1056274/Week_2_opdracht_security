@@ -190,6 +190,22 @@ def onderzoek_afkeuren(onderzoek_id):
     studies.update_status(onderzoek_id, "afgekeurd")
     return redirect(url_for("onderzoeken"))
 
+@app.route("/organisatie/onderzoeken")
+def organisatie_onderzoeken():
+    rows = studies.all_with_details()
+    onderzoeken = []
+    for row in rows:
+        onderzoeken.append({
+            "id": row["id"],            
+            "organisatie": row["organisatie"],
+            "naam": row["title"],       
+        })
+    return render_template(
+        "pages/organisatie/organisatie_onderzoeken.html",
+        onderzoeken=onderzoeken
+    )
+
+
 @app.route("/ervaringsdeskundige/inschrijvingen")
 def ervaringsdeskundige_inschrijvingen():
     user_id = session.get("user_id")
