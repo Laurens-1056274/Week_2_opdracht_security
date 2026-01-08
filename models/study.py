@@ -31,6 +31,17 @@ class Study:
                     s.title,
                     s.organization_id,
                     s.status,
+                    s.available,
+                    s.description,
+                    s.start_date,
+                    s.end_date,
+                    s.study_type,
+                    s.location,
+                    s.has_reward,
+                    s.reward,
+                    s.age_min,
+                    s.age_max,
+                        
                     o.name AS organisatie
                 FROM studies s
                 JOIN organizations o ON s.organization_id = o.id
