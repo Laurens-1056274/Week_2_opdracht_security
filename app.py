@@ -178,30 +178,29 @@ def submit():
     print("new account")
     return redirect(f"/OrganisatieAccount?correct=yes")
 
-@app.route("/submit_study", methods=["GET", "POST"])
+@app.route("/submit_study", methods=["POST"])
 def submit_study():
-    if request.method == "GET":
-        return redirect("/")
-
     data = request.form
-
     organization_id = session.get("organization_id")
+
+    has_reward = int(data.get("has_reward", 0))
+
+    study_type = data.get("study_type", "online")
+    if study_type not in ("telefonisch", "online", "op locatie"):
+        study_type = "online"
 
     submit_organization_onderzoek(
         organization_id,
         data["title"],
-        data["type"],
-        data["status"],
-        data["available"],
-        data["description"],
-        data["start_date"],
-        data["end_date"],
-        data["study_type"],
-        data["location"],
-        data["has_reward"],
-        data["reward"],
-        data["age_min"],
-        data["age_max"]
+        data.get("description", ""),
+        data.get("start_date"),
+        data.get("end_date"),
+        study_type,
+        data.get("location", ""),
+        has_reward,
+        data.get("reward", ""),
+        data.get("age_min"),
+        data.get("age_max")
     ).add_to_database()
 
     return redirect("/organisatie/onderzoeken")

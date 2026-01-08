@@ -5,19 +5,7 @@
     Vul het onderstaande formulier in om een onderzoek toe te voegen
   </h2>
 
-  <form action="/submit" method="POST" class="form-card">
-    <!-- Organization (foreign key) -->
-    <div class="form-group">
-      <label for="organization_id">Organisatie ID</label>
-      <input
-        type="number"
-        id="organization_id"
-        name="organization_id"
-        placeholder="Organisatie ID"
-        required
-      />
-    </div>
-
+  <form action="/submit_study" method="POST" class="form-card">
     <!-- Title -->
     <div class="form-group">
       <label for="title">Titel onderzoek</label>
@@ -45,16 +33,6 @@
       </div>
     </div>
 
-    <!-- Status -->
-    <div class="form-group">
-      <label>Status</label>
-      <select name="status" required>
-        <option value="concept">Concept</option>
-        <option value="actief">Actief</option>
-        <option value="gesloten">Gesloten</option>
-      </select>
-    </div>
-
     <!-- Available -->
     <div class="form-group">
       <label>Aantal beschikbare plaatsen</label>
@@ -73,27 +51,25 @@
     </div>
 
     <!-- Start date -->
-    <div class="form-group">
-      <label for="start_date">Startdatum</label>
-      <input type="date" id="start_date" name="start_date" required />
+    <div class="form-group-row">
+      <div class="form-row" style="margin-right: 1em">
+        <label for="start_date">Startdatum</label>
+        <input type="date" id="start_date" name="start_date" required />
+      </div>
+
+      <div class="form-row">
+        <label for="end_date">Einddatum</label>
+        <input type="date" id="end_date" name="end_date" required />
+      </div>
     </div>
 
-    <!-- End date -->
     <div class="form-group">
-      <label for="end_date">Einddatum</label>
-      <input type="date" id="end_date" name="end_date" required />
-    </div>
-
-    <!-- Study type -->
-    <div class="form-group">
-      <label for="study_type">Onderzoekstype</label>
-      <input
-        type="text"
-        id="study_type"
-        name="study_type"
-        placeholder="Bijv. interview, enquête"
-        required
-      />
+      <label for="study_type">Type onderzoek</label>
+      <select id="study_type" name="study_type" required class="input-select">
+        <option value="telefonisch">Telefonisch</option>
+        <option value="online">Online</option>
+        <option value="op locatie">Op locatie</option>
+      </select>
     </div>
 
     <!-- Location -->
@@ -113,18 +89,14 @@
       <label>Beloning aanwezig?</label>
       <div class="radio-group">
         <label>
-          <input type="radio" name="has_reward" value="1" required />
-          Ja
+          <input type="radio" name="has_reward" value="1" required /> Ja
         </label>
-        <label>
-          <input type="radio" name="has_reward" value="0" />
-          Nee
-        </label>
+        <label> <input type="radio" name="has_reward" value="0" /> Nee </label>
       </div>
     </div>
 
-    <!-- Reward -->
-    <div class="form-group">
+    <!-- Reward (conditionally shown) -->
+    <div class="form-group" id="reward-container" style="display: none">
       <label for="reward">Beloning</label>
       <input
         type="text"
@@ -150,11 +122,27 @@
   </form>
 </div>
 
+<script>
+  const rewardContainer = document.getElementById("reward-container");
+  const hasRewardRadios = document.getElementsByName("has_reward");
+
+  hasRewardRadios.forEach((radio) => {
+    radio.addEventListener("change", () => {
+      if (radio.value === "1" && radio.checked) {
+        rewardContainer.style.display = "block"; // show input
+      } else if (radio.value === "0" && radio.checked) {
+        rewardContainer.style.display = "none"; // hide input
+        document.getElementById("reward").value = ""; // clear previous value
+      }
+    });
+  });
+</script>
+
+<!-- 
 <div class="table-container">
   <table>
     <tr>
       <th>ID</th>
-      <th>Organisatie_naam</th>
       <th>Title</th>
       <th>status</th>
       <th>available</th>
@@ -171,7 +159,6 @@
     {% for onderzoeken in onderzoeken %}
     <tr>
       <td>{{ onderzoeken.id }}</td>
-      <td>({{ onderzoeken.organization_id }}) {{ onderzoeken.naam }}</td>
       <td>{{ onderzoeken.title }}</td>
       <td>{{ onderzoeken.status }}</td>
       <td>{{ onderzoeken.available }}</td>
@@ -189,6 +176,5 @@
     </tr>
     {% endfor %}
   </table>
-</div>
-
+</div> -->
 {% endblock %}
