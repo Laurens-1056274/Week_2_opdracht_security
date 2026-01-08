@@ -1,0 +1,180 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="form-container">
+  <h2 class="subtitle">
+    Vul het onderstaande formulier in om een onderzoek toe te voegen
+  </h2>
+
+  <form action="/submit_study" method="POST" class="form-card">
+    <!-- Title -->
+    <div class="form-group">
+      <label for="title">Titel onderzoek</label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        placeholder="Titel van het onderzoek"
+        required
+      />
+    </div>
+
+    <!-- Type -->
+    <div class="form-group">
+      <label>Type onderzoek</label>
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="type" value="online" required />
+          Online
+        </label>
+        <label>
+          <input type="radio" name="type" value="fysiek" />
+          Fysiek
+        </label>
+      </div>
+    </div>
+
+    <!-- Available -->
+    <div class="form-group">
+      <label>Aantal beschikbare plaatsen</label>
+      <input type="number" name="available" placeholder="Bijv. 10" required />
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label for="description">Beschrijving</label>
+      <textarea
+        id="description"
+        name="description"
+        placeholder="Beschrijving van het onderzoek"
+        required
+      ></textarea>
+    </div>
+
+    <!-- Start date -->
+    <div class="form-group-row">
+      <div class="form-row" style="margin-right: 1em">
+        <label for="start_date">Startdatum</label>
+        <input type="date" id="start_date" name="start_date" required />
+      </div>
+
+      <div class="form-row">
+        <label for="end_date">Einddatum</label>
+        <input type="date" id="end_date" name="end_date" required />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="study_type">Type onderzoek</label>
+      <select id="study_type" name="study_type" required class="input-select">
+        <option value="telefonisch">Telefonisch</option>
+        <option value="online">Online</option>
+        <option value="op locatie">Op locatie</option>
+      </select>
+    </div>
+
+    <!-- Location -->
+    <div class="form-group">
+      <label for="location">Locatie</label>
+      <input
+        type="text"
+        id="location"
+        name="location"
+        placeholder="Bijv. Amsterdam / Online"
+        required
+      />
+    </div>
+
+    <!-- Has reward -->
+    <div class="form-group">
+      <label>Beloning aanwezig?</label>
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="has_reward" value="1" required /> Ja
+        </label>
+        <label> <input type="radio" name="has_reward" value="0" /> Nee </label>
+      </div>
+    </div>
+
+    <!-- Reward (conditionally shown) -->
+    <div class="form-group" id="reward-container" style="display: none">
+      <label for="reward">Beloning</label>
+      <input
+        type="text"
+        id="reward"
+        name="reward"
+        placeholder="Bijv. €10 cadeaubon"
+      />
+    </div>
+
+    <!-- Age min -->
+    <div class="form-group">
+      <label for="age_min">Minimum leeftijd</label>
+      <input type="number" id="age_min" name="age_min" placeholder="18" />
+    </div>
+
+    <!-- Age max -->
+    <div class="form-group">
+      <label for="age_max">Maximum leeftijd</label>
+      <input type="number" id="age_max" name="age_max" placeholder="65" />
+    </div>
+
+    <button type="submit" class="submit-btn">Onderzoek opslaan</button>
+  </form>
+</div>
+
+<script>
+  const rewardContainer = document.getElementById("reward-container");
+  const hasRewardRadios = document.getElementsByName("has_reward");
+
+  hasRewardRadios.forEach((radio) => {
+    radio.addEventListener("change", () => {
+      if (radio.value === "1" && radio.checked) {
+        rewardContainer.style.display = "block"; // show input
+      } else if (radio.value === "0" && radio.checked) {
+        rewardContainer.style.display = "none"; // hide input
+        document.getElementById("reward").value = ""; // clear previous value
+      }
+    });
+  });
+</script>
+
+<!-- 
+<div class="table-container">
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>status</th>
+      <th>available</th>
+      <th>description</th>
+      <th>start_date</th>
+      <th>end_date</th>
+      <th>study_type</th>
+      <th>location</th>
+      <th>Reward</th>
+      <th>age_min</th>
+      <th>age_max</th>
+    </tr>
+
+    {% for onderzoeken in onderzoeken %}
+    <tr>
+      <td>{{ onderzoeken.id }}</td>
+      <td>{{ onderzoeken.title }}</td>
+      <td>{{ onderzoeken.status }}</td>
+      <td>{{ onderzoeken.available }}</td>
+      <td>{{ onderzoeken.description }}</td>
+      <td>{{ onderzoeken.start_date }}</td>
+      <td>{{ onderzoeken.end_date }}</td>
+      <td>{{ onderzoeken.study_type }}</td>
+      <td>{{ onderzoeken.location }}</td>
+      <td>
+        {% if onderzoeken.has_reward == 0 %} {{ onderzoeken.reward }} {% else %}
+        None {% endif %}
+      </td>
+      <td>{{ onderzoeken.age_min }}</td>
+      <td>{{ onderzoeken.age_max }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div> -->
+{% endblock %}

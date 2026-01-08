@@ -6,6 +6,7 @@ from models.organization import Organization
 from models.study import Study
 from models.enrollment import Enrollment
 from database_related_code.add_new_organisationaccount import submit_organisation_account
+from database_related_code.add_new_organisatieonderzoek import submit_organization_onderzoek
 from database_related_code.login_oranization import login_account_organization
 from database_related_code.login_user import login_account
 
@@ -162,6 +163,33 @@ def submit():
     ).add_to_database()
     return redirect("/")
 
+@app.route("/submit_study", methods=["POST"])
+def submit_study():
+    data = request.form
+    organization_id = session.get("organization_id")
+
+    has_reward = int(data.get("has_reward", 0))
+
+    study_type = data.get("study_type", "online")
+    if study_type not in ("telefonisch", "online", "op locatie"):
+        study_type = "online"
+
+    submit_organization_onderzoek(
+        organization_id,
+        data["title"],
+        data.get("description", ""),
+        data.get("start_date"),
+        data.get("end_date"),
+        study_type,
+        data.get("location", ""),
+        has_reward,
+        data.get("reward", ""),
+        data.get("age_min"),
+        data.get("age_max")
+    ).add_to_database()
+
+    return redirect("/organisatie/onderzoeken")
+
 @app.route("/onderzoeken")
 def onderzoeken():
     conn = db.connect()
@@ -189,6 +217,36 @@ def onderzoek_goedkeuren(onderzoek_id):
 def onderzoek_afkeuren(onderzoek_id):
     studies.update_status(onderzoek_id, "afgekeurd")
     return redirect(url_for("onderzoeken"))
+
+@app.route("/organisatie/onderzoeken")
+def organisatie_onderzoeken():
+    rows = studies.all_with_details()
+    onderzoeken = []
+    for row in rows:
+        onderzoeken.append({
+            "id": row["id"],            
+            "organization_id": row["organization_id"],
+            "organisatie": row["organisatie"],
+            "title": row["title"],       
+            "status": row["status"],       
+            "available": row["available"],       
+            "description": row["description"],       
+            "start_date": row["start_date"],       
+            "end_date": row["end_date"],       
+            "study_type": row["study_type"],       
+            "location": row["location"],       
+            "has_reward": row["has_reward"],       
+            "reward": row["reward"],       
+            "age_min": row["age_min"],       
+            "age_max": row["age_max"],       
+        })
+    return render_template(
+        "pages/organisatie/organisatie_onderzoeken.html",
+        page_title="Organisatie Onderzoek",
+        description="Organisatie Onderzoek",
+        onderzoeken=onderzoeken
+    )
+
 
 @app.route("/ervaringsdeskundige/inschrijvingen")
 def ervaringsdeskundige_inschrijvingen():
