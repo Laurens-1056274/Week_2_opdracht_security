@@ -173,9 +173,7 @@ def submit():
     data["details"]
     ).add_to_database()
     if add_to_database == "no":
-        print("account already exist")
         return redirect(f"/OrganisatieAccount?correct=no")
-    print("new account")
     return redirect(f"/OrganisatieAccount?correct=yes")
 
 @app.route("/submit_study", methods=["POST"])
