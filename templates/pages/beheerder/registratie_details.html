@@ -20,6 +20,7 @@
 
 </head>
 <body>
+<div class="table-scroller table-container">
     <table>
         <tr>
             <th class ="main-header" colspan ="2" >Persoonsgegevens</th>
@@ -54,7 +55,7 @@
         </tr>
         <tr>
             <th>Hulpmiddelen</th>
-            <td>{{ profile.assisitive_tools }}</td>
+            <td>{{ profile.assistive_tools }}</td>
         </tr>
         <tr>
             <th>Intro</th>
@@ -115,7 +116,34 @@
         </tr>
     </table>
 <br>
-<button type = "button "> goedkeuren </button>
-<button type = "button"> afkeuren </button>
+    <form method="post" action="{{ url_for('registratie_goedkeuren', profile_id=profile.id) }}">
+                <button class=goedkeuren>Goedkeuren</button>
+    </form>
+
+    <form method="post" action="{{ url_for('registratie_afkeuren', profile_id=profile.id) }}">
+                <button class=afkeuren>Afkeuren</button>
+    </form>
+</div>
+
+<style>
+    .goedkeuren {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+
+  .afkeuren {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
 
 {% endblock %}

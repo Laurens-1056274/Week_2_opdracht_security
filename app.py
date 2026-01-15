@@ -1,11 +1,12 @@
 import os
 from flask import Flask, render_template,request,redirect,session,url_for
 from data.database import Database
+from models.registration_details import RegistratieDetails
 from models.user import User
 from models.organization import Organization
 from models.study import Study
 from models.enrollment import Enrollment
-from models.registratie import Registratie
+from models.registrations import Registratie
 from database_related_code.add_new_organisationaccount import submit_organisation_account
 from database_related_code.add_new_organisatieonderzoek import submit_organization_onderzoek
 from database_related_code.login_oranization import login_account_organization
@@ -95,6 +96,17 @@ def registratie_details(profile_id):
                            page_title="Registratie details",
                            description="Alle data van de deskundige",
                            profile=profile)
+
+@app.route("/registratie/<int:profile_id>/goedkeuren", methods=["POST"])
+def registratie_goedkeuren(profile_id):
+    RegistratieDetails.update_status(profile_id, "goedgekeurd")
+    return redirect(url_for("registraties_overzicht"))
+
+@app.route("/registratie/<int:profile_id>/afkeuren", methods=["POST"])
+def registratie_afkeuren(profile_id):
+    RegistratieDetails.update_status(profile_id, "afgekeurd")
+    return redirect(url_for("registraties_overzicht"))
+
 
 @app.route("/ervaringsdeskunidge_dashboard")
 def ervaringsdeskunidge_dashboard():
