@@ -51,3 +51,27 @@ class Enrollment:
             """, (profile_id,))
             return cur.fetchall()
 
+    def create(self, profile_id, study_id):
+        conn = self.db.connect()
+        conn.execute("""
+        INSERT INTO enrollments (profile_id, study_id, status)
+        VALUES (?, ?, 'in afwachting')
+        """, (profile_id, study_id))
+        conn.commit()
+        conn.close()
+    def approved_for_org(self, org_id):
+        with self.db.connect() as con:
+            cur = con.cursor()
+            cur.execute("""
+                        SELECT e.id,
+                               p.first_name || ' ' || p.last_name,
+                               s.title,
+                               e.created_at
+                        FROM enrollments e
+                                 JOIN profiles p ON p.id = e.profile_id
+                                 JOIN studies s ON s.id = e.study_id
+                        WHERE s.organization_id = ?
+                          AND e.status = 'goedgekeurd'
+                        """, (org_id,))
+            return cur.fetchall()
+
