@@ -1,10 +1,12 @@
 import os
 from flask import Flask, render_template,request,redirect,session,url_for
 from data.database import Database
+from models.registration_details import RegistratieDetails
 from models.user import User
 from models.organization import Organization
 from models.study import Study
 from models.enrollment import Enrollment
+from models.registrations import Registratie
 from database_related_code.add_new_organisationaccount import submit_organisation_account
 from database_related_code.add_new_organisatieonderzoek import submit_organization_onderzoek
 from database_related_code.login_oranization import login_account_organization
@@ -21,6 +23,7 @@ users = User(DB_PATH)
 organizations = Organization(DB_PATH)
 studies = Study(DB_PATH)
 enrollments = Enrollment(DB_PATH)
+Registratie_model = Registratie('./app.db')
 user_role_admin = False
 user_role_organization = False
 user_role_expert = False
@@ -75,6 +78,37 @@ def inschrijving_goedkeuren(inschrijving_id):
 def inschrijving_afkeuren(inschrijving_id):
     enrollments.update_status(inschrijving_id, "afgekeurd")
     return redirect(url_for("beheerder_inschrijvingen"))
+
+
+@app.route("/registraties_overzicht", methods=["GET"])
+def registraties_overzicht():
+    registraties = Registratie_model.get_all_registraties()
+
+    return render_template("pages/beheerder/registraties_overzicht.html",
+                           page_title="Registraties overzicht",
+                           description="Overzicht van nieuwe registraties",
+                           registraties=registraties)
+
+@app.route("/registratie_details/<int:profile_id>", methods=["GET"])
+def registratie_details(profile_id):
+    profile = Registratie_model.get_profile_details(profile_id)
+    return render_template("pages/beheerder/registratie_details.html",
+                           page_title="Registratie details",
+                           description="Alle data van de deskundige",
+                           profile=profile)
+
+@app.route("/registratie/<int:user_id>/goedkeuren", methods=["POST"])
+def registratie_goedkeuren(user_id):
+    users = RegistratieDetails("data/app.db")
+    users.update_status(user_id, "goedgekeurd")
+    return redirect(url_for("registraties_overzicht"))
+
+@app.route("/registratie/<int:user_id>/afkeuren", methods=["POST"])
+def registratie_afkeuren(user_id):
+    users = RegistratieDetails("data/app.db")
+    users.update_status(user_id, "nieuw")
+    return redirect(url_for("registraties_overzicht"))
+
 
 @app.route("/ervaringsdeskunidge_dashboard")
 def ervaringsdeskunidge_dashboard():

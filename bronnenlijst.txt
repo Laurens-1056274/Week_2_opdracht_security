@@ -9,3 +9,9 @@ https://stackoverflow.com/questions/27747578/how-do-i-clear-a-flask-session
 
 Mattia:
 https://jinja.palletsprojects.com/en/stable/templates/
+
+Joris:
+W3Schools.com. (z.d.-a). https://www.w3schools.com/html/html_tables.asp
+W3Schools.com. (z.d.-b). https://www.w3schools.com/html/html_table_borders.asp
+W3Schools.com. (z.d.-c). https://www.w3schools.com/html/html_table_headers.asp
+W3Schools.com. (z.d.-d). https://www.w3schools.com/html/html_table_colspan_rowspan.asp

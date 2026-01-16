@@ -1,0 +1,149 @@
+{% extends "base.html" %} {% block content %}
+
+
+    <style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse : collapse
+    }
+
+    .main-header {
+        text-align: center;
+    }
+
+    th {
+        text-align: left;
+    }
+
+
+</style>
+
+<body>
+<div class="table-scroller table-container">
+    <table>
+        <tr>
+            <th class ="main-header" colspan ="2" >Persoonsgegevens</th>
+        </tr>
+        <tr>
+            <th>gebruikers id</th>
+            <td>{{ profile.user_id }}</td>
+        </tr>
+        <tr>
+            <th>Voornaam</th>
+            <td>{{ profile.first_name }}</td>
+        </tr>
+        <tr>
+            <th>Achternaam</th>
+            <td>{{ profile.last_name }}</td>
+        </tr>
+        <tr>
+            <th>Postcode</th>
+            <td>{{ profile.postcode }}</td>
+        </tr>
+        <tr>
+            <th>Geslacht</th>
+            <td>{{ profile.gender }}</td>
+        </tr>
+        <tr>
+            <th>Telefoon nummer</th>
+            <td>{{ profile.phone }}</td>
+        </tr>
+        <tr>
+            <th>Geboortedatum</th>
+            <td>{{ profile.birth_date }}</td>
+        </tr>
+        <tr>
+            <th>Hulpmiddelen</th>
+            <td>{{ profile.assistive_tools }}</td>
+        </tr>
+        <tr>
+            <th>Intro</th>
+            <td>{{ profile.intro }}</td>
+        </tr>
+        <tr>
+            <th>Notities</th>
+            <td>{{ profile.notes }}</td>
+        </tr>
+        <tr>
+            <th>Voorwaarden</th>
+            <td>{{ profile.agreed_terms }}</td>
+        </tr>
+    </table>
+<br>
+    <table>
+        <tr>
+            <th class ="main-header" colspan ="2">Beperkingen en voorkeuren</th>
+        </tr>
+        <tr>
+            <th>Beperkingen</th>
+            <td>waarde</td>
+        </tr>
+        <tr>
+            <th>Voorkeuren</th>
+            <td>waarde</td>
+        </tr>
+
+    </table>
+<br>
+    <table>
+        <tr>
+            <th class ="main-header" colspan ="2">toezichthouder</th>
+        </tr>
+        <tr>
+            <th>Naam</th>
+            <td>{{ profile.guardian_name }}</td>
+        </tr>
+        <tr>
+            <th>e-mail</th>
+            <td>{{ profile.guardian_email }}</td>
+        </tr>
+        <tr>
+            <th>Telefoon nummer</th>
+            <td>{{ profile.guardian_phone }}</td>
+        </tr>
+        <tr>
+            <th>contact voorkeur</th>
+            <td>{{ profile.contact_preference }}</td>
+        </tr>
+        <tr>
+            <th>voorkeur studie type</th>
+            <td>{{ profile.preferred_study_type }}</td>
+        </tr>
+        <tr>
+            <th>beschikbaarheid</th>
+            <td>{{ profile.availability }}</td>
+        </tr>
+    </table>
+<br>
+    <form method="post" action="{{ url_for('registratie_goedkeuren', user_id=profile.user_id) }}">
+                <button class=goedkeuren>Goedkeuren</button>
+    </form>
+
+    <form method="post" action="{{ url_for('registratie_afkeuren', user_id=profile.user_id) }}"
+         onsubmit="return confirm('Weet u zeker dat u deze registratie wilt afkeuren?');">
+                <button class=afkeuren>Afkeuren</button>
+    </form>
+</div>
+
+<style>
+    .goedkeuren {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+
+  .afkeuren {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+
+{% endblock %}
