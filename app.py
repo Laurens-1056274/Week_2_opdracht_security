@@ -145,6 +145,20 @@ def OrganisatieAccount():
     return render_template("pages/beheerder/maak_organisatieaccount.html", 
                            page_title="OrganisatieAccount", 
                            description="Pagina om een organisatieaccount aan te maken. Vul het formulier in om een organisatie toe te voegen.")
+@app.route("/organisatie/goedkeurde-inschrijvingen")
+def organisatie_goedgekeurd():
+    if session.get("user_type") != "organization":
+        return redirect("/login")
+
+    org_id = session.get("organization_id")
+    rows = enrollments.approved_for_org(org_id)
+
+    return render_template(
+        "pages/organisatie/goedgekeurde_inschrijvingen.html",
+        page_title="Overzicht Deelnemers",
+        description="Overzicht van goedgekeurde deelnemers voor uw onderzoeken",
+        rows=rows
+    )
 
 @app.route("/submit", methods=["GET", "POST"])
 def submit():

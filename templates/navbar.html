@@ -1,81 +1,73 @@
 <nav class="navbar" role="navigation" aria-label="Main Navigation">
   <div class="container">
     <ul id="nav-menu" class="nav-menu">
-      <div class="main_menu">
-        <li>
-          <a
-            href="{{ url_for('index') }}"
-            class="{% if request.endpoint == 'index' %}active{% endif %}"
-          >
-            Home
-          </a>
-        </li>
+      <li>
+        <a href="{{ url_for('index') }}"
+           class="{% if request.endpoint == 'index' %}active{% endif %}">
+          Home
+        </a>
+      </li>
 
-        {% if session.user_type == "admin" %}
-        <li>
-          <a
-            href="{{ url_for('OrganisatieAccount') }}"
-            class="{% if request.endpoint == 'OrganisatieAccount' %}active{% endif %}"
-          >
-            OrganisatieAccount
-          </a>
-        </li>
+      {% if session.user_type == "admin" %}
+      <li>
+        <a href="{{ url_for('OrganisatieAccount') }}"
+           class="{% if request.endpoint == 'OrganisatieAccount' %}active{% endif %}">
+          OrganisatieAccount
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('beheerder_inschrijvingen') }}">
+          Inschrijvingen
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('onderzoeken') }}">Onderzoeken</a>
+      </li>
+      {% endif %}
 
-        <li>
-          <a href="{{ url_for('beheerder_inschrijvingen') }}">
-            Inschrijvingen
-          </a>
-        </li>
+      {% if session.user_type == "expert" %}
+      <li>
+        <a href="{{ url_for('ervaringsdeskundige_inschrijvingen') }}"
+           class="{% if request.endpoint == 'ervaringsdeskundige_inschrijvingen' %}active{% endif %}">
+          Mijn inschrijvingen
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('ervaringsdeskundige_profiel') }}"
+           class="{% if request.endpoint == 'ervaringsdeskundige_profiel' %}active{% endif %}">
+          Profiel
+        </a>
+      </li>
+      {% endif %}
 
-        <li>
-          <a href="{{ url_for('onderzoeken') }}"> Onderzoeken </a>
-        </li>
-        {% endif %} {% if session.user_type == "expert" %}
-        <li>
-          <a
-            href="{{ url_for('ervaringsdeskundige_inschrijvingen') }}"
-            class="{% if request.endpoint == 'ervaringsdeskundige_inschrijvingen' %}active{% endif %}"
-          >
-            Mijn inschrijvingen
-          </a>
-        </li>
-        <li>
-          <a
-            href="{{ url_for('ervaringsdeskundige_profiel') }}"
-            class="{% if request.endpoint == 'ervaringsdeskundige_profiel' %}active{% endif %}"
-          >
-            Profiel
-          </a>
-        </li>
-        {% endif %} {% if session.user_type == "organization" %}
+      {% if session.user_type == "organization" %}
+      <li>
+        <a href="{{ url_for('organisatie_onderzoeken') }}"
+           class="{% if request.endpoint == 'organisatie_onderzoeken' %}active{% endif %}">
+          Onderzoeken
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('organisatie_goedgekeurd') }}"
+           class="{% if request.endpoint == 'organisatie_goedgekeurd' %}active{% endif %}">
+          Overzicht Deelnemers
+        </a>
+      </li>
+      {% endif %}
 
-        <li>
-          <a
-            href="{{ url_for('organisatie_onderzoeken') }}"
-            class="{% if request.endpoint == 'organisatie_onderzoeken' %}active{% endif %}"
-          >
-            Onderzoeken
-          </a>
-        </li>
-
-        {% endif %} {% if session.user_type == "not defined" %}
-        <li>
-          <a
-            href="{{ url_for('login_page') }}"
-            class="{% if request.endpoint == 'login_page' %}active{% endif %}"
-          >
-            Login
-          </a>
-        </li>
-        {% endif %}
-      </div>
+      {% if session.user_type == "not defined" %}
+      <li>
+        <a href="{{ url_for('login_page') }}"
+           class="{% if request.endpoint == 'login_page' %}active{% endif %}">
+          Login
+        </a>
+      </li>
+      {% endif %}
 
       {% if session.user_type != "not defined" %}
       <li>
-        <a
-          href="{{ url_for('logout') }}"
-          class="{% if request.endpoint == 'logout' %}active{% endif %}"
-        >
+        <a href="{{ url_for('logout') }}"
+           class="{% if request.endpoint == 'logout' %}active{% endif %}">
           Logout
         </a>
       </li>
