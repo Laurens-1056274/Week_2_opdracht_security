@@ -18,7 +18,6 @@
 
 </style>
 
-</head>
 <body>
 <div class="table-scroller table-container">
     <table>
@@ -87,9 +86,9 @@
     </table>
 <br>
     <table>
-        <tb>
+        <tr>
             <th class ="main-header" colspan ="2">toezichthouder</th>
-        </tb>
+        </tr>
         <tr>
             <th>Naam</th>
             <td>{{ profile.guardian_name }}</td>
@@ -116,11 +115,12 @@
         </tr>
     </table>
 <br>
-    <form method="post" action="{{ url_for('registratie_goedkeuren', profile_id=profile.id) }}">
+    <form method="post" action="{{ url_for('registratie_goedkeuren', user_id=profile.user_id) }}">
                 <button class=goedkeuren>Goedkeuren</button>
     </form>
 
-    <form method="post" action="{{ url_for('registratie_afkeuren', profile_id=profile.id) }}">
+    <form method="post" action="{{ url_for('registratie_afkeuren', user_id=profile.user_id) }}"
+         onsubmit="return confirm('Weet u zeker dat u deze registratie wilt afkeuren?');">
                 <button class=afkeuren>Afkeuren</button>
     </form>
 </div>

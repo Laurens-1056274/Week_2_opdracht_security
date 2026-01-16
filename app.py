@@ -97,14 +97,16 @@ def registratie_details(profile_id):
                            description="Alle data van de deskundige",
                            profile=profile)
 
-@app.route("/registratie/<int:profile_id>/goedkeuren", methods=["POST"])
-def registratie_goedkeuren(profile_id):
-    RegistratieDetails.update_status(profile_id, "goedgekeurd")
+@app.route("/registratie/<int:user_id>/goedkeuren", methods=["POST"])
+def registratie_goedkeuren(user_id):
+    users = RegistratieDetails("data/app.db")
+    users.update_status(user_id, "goedgekeurd")
     return redirect(url_for("registraties_overzicht"))
 
-@app.route("/registratie/<int:profile_id>/afkeuren", methods=["POST"])
-def registratie_afkeuren(profile_id):
-    RegistratieDetails.update_status(profile_id, "afgekeurd")
+@app.route("/registratie/<int:user_id>/afkeuren", methods=["POST"])
+def registratie_afkeuren(user_id):
+    users = RegistratieDetails("data/app.db")
+    users.update_status(user_id, "nieuw")
     return redirect(url_for("registraties_overzicht"))
 
 
