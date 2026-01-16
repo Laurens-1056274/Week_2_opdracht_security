@@ -9,3 +9,11 @@ https://stackoverflow.com/questions/27747578/how-do-i-clear-a-flask-session
 
 Mattia:
 https://jinja.palletsprojects.com/en/stable/templates/
+
+Hind:
+https://flask.palletsprojects.com/
+https://jinja.palletsprojects.com/
+https://www.sqlite.org/docs.html
+https://www.youtube.com/playlist?list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH
+https://youtu.be/Ze_lPWFQmXI?si=1-QtUcZOtqwAZHUm
+https://www.w3schools.com/
