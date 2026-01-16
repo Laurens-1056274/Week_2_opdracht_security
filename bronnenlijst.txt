@@ -15,3 +15,11 @@ W3Schools.com. (z.d.-a). https://www.w3schools.com/html/html_tables.asp
 W3Schools.com. (z.d.-b). https://www.w3schools.com/html/html_table_borders.asp
 W3Schools.com. (z.d.-c). https://www.w3schools.com/html/html_table_headers.asp
 W3Schools.com. (z.d.-d). https://www.w3schools.com/html/html_table_colspan_rowspan.asp
+
+Hind:
+https://flask.palletsprojects.com/
+https://jinja.palletsprojects.com/
+https://www.sqlite.org/docs.html
+https://www.youtube.com/playlist?list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH
+https://youtu.be/Ze_lPWFQmXI?si=1-QtUcZOtqwAZHUm
+https://www.w3schools.com/
