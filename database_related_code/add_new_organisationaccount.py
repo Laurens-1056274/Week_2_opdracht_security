@@ -13,11 +13,21 @@ class submit_organisation_account:
         self.details = attribute8
         if self.details == "":
             self.details = None
+        self.correct = "yes"
 
     def add_to_database(self):
         conn = sqlite3.connect('data/app.db')
         c = conn.cursor()
+
+
+        c.execute("SELECT * FROM organizations WHERE email = ? AND phone = ?",(self.email,self.phone))
+        result = c.fetchall()
+        if len(result) >1:
+            self.correct = "no"
+            return self.correct
+
         c.execute("INSERT INTO organizations (name,type,website,description,contact_person,email,phone,details)" \
         "VALUES (?,?,?,?,?,?,?,?)",(self.name,self.type,self.website,self.description,self.contact_person,self.email,self.phone,self.details))
         conn.commit()
         conn.close()
+        return

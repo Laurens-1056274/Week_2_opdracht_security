@@ -32,9 +32,19 @@
         </li>
 
         <li>
-            <a
+          <a
+            href="{{ url_for('beheerder_dashboard') }}"
+            class="{% if request.endpoint == 'beheerder_dashboard' %}active{% endif %}"
+            >beheerder dashboard</a
+          >
+        </li>
+        {% endif %} {% if session.user_type == "expert" %}
+        <li>
+          <a
             href="{{ url_for('registraties_overzicht') }}"
-            class="{% if request.endpoint == 'registraties_overzicht'%}active{% endif %}">Registraties</a>
+            class="{% if request.endpoint == 'registraties_overzicht'%}active{% endif %}"
+            >Registraties</a
+          >
         </li>
         {% endif %} {% if session.user_type == "expert" %}
         <li>
