@@ -58,3 +58,20 @@ https://www.udemy.com/course/100-days-of-code/learn/lecture/21928106#overview - 
 1. N.V.T.
 2. Ik heb het opgelost door de juiste id door te geven aan de knop en de status update via de juiste databasefunctie te laten lopen
 3. via print commandos kunnen bekijken dat het werkt maar de userprofielen niet voldoen aan de onderzoeken.
+
+### waar gebruikt 
+1. N.V.T.
+2. onderzoeken.html 
+52 - 59
+study.py 
+15 - 22
+3. app.py
+313-370
+onderzoek_detail.html
+6 - 79
+
+### git plek
+1. N.V.T.
+2. https://github.com/Rac-Software-Development/wp2-2025-mvc-1c2-1/blob/feature/dev/templates/pages/beheerder/onderzoeken.html
+3. https://github.com/Rac-Software-Development/wp2-2025-mvc-1c2-1/blob/feature/dev/templates/pages/ervaringsdeskundige/onderzoek_detail.html
+   https://github.com/Rac-Software-Development/wp2-2025-mvc-1c2-1/blob/feature/dev/app.py
