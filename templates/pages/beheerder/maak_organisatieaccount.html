@@ -1,6 +1,24 @@
 {% extends "base.html" %} {% block content %}
 
 <div class="form-container">
+  {% if correct == "no" %}
+  <style>
+    label {
+      display: block;
+    }
+    input[type="email"],
+    input[type="tell"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      box-sizing: border-box;
+      border: 2px solid red;
+      border-radius: 8px;
+    }
+  </style>
+  {% endif %} {% if correct == "no" %}
+  <h3 style="background-color:Tomato;">Er bestaat al een account met deze E-mail adres en Telefoonnummer</h3>
+  {% endif %}
   <h2 class="subtitle">
     Vul het onderstaande formulier in om een organisatie toe te voegen
   </h2>
@@ -76,7 +94,7 @@
     <div class="form-group">
       <label for="phone">Telefoonnummer</label>
       <input
-        type="tel"
+        type="tell"
         id="phone"
         name="phone"
         placeholder="telefoon nummer"
@@ -87,13 +105,17 @@
     <div class="form-group">
       <label for="details">Overige details</label>
       <textarea
+        type="text"
         id="details"
         name="details"
         placeholder="extra details"
       ></textarea>
     </div>
 
-    <button type="submit" class="submit-btn">Verzenden</button>
+    <button type="submit" class="submit-btn" onclick="myAlert()">
+      Verzenden
+    </button>
   </form>
 </div>
+
 {% endblock %}

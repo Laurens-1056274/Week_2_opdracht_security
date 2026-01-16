@@ -6,6 +6,9 @@ https://jinja.palletsprojects.com/en/stable/templates/
 https://www.w3schools.com/css/tryit.asp?filename=trycss_form_border
 https://flask.palletsprojects.com/en/stable/quickstart/#sessions
 https://stackoverflow.com/questions/27747578/how-do-i-clear-a-flask-session
+https://www.w3schools.com/tags/tag_iframe.ASP
+https://www.w3schools.com/jsref/met_win_alert.asp
+
 
 Mattia:
 https://jinja.palletsprojects.com/en/stable/templates/
@@ -15,3 +18,11 @@ W3Schools.com. (z.d.-a). https://www.w3schools.com/html/html_tables.asp
 W3Schools.com. (z.d.-b). https://www.w3schools.com/html/html_table_borders.asp
 W3Schools.com. (z.d.-c). https://www.w3schools.com/html/html_table_headers.asp
 W3Schools.com. (z.d.-d). https://www.w3schools.com/html/html_table_colspan_rowspan.asp
+
+Hind:
+https://flask.palletsprojects.com/
+https://jinja.palletsprojects.com/
+https://www.sqlite.org/docs.html
+https://www.youtube.com/playlist?list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH
+https://youtu.be/Ze_lPWFQmXI?si=1-QtUcZOtqwAZHUm
+https://www.w3schools.com/

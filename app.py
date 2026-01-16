@@ -80,6 +80,14 @@ def inschrijving_afkeuren(inschrijving_id):
     return redirect(url_for("beheerder_inschrijvingen"))
 
 
+@app.route("/beheerder_dashboard")
+def beheerder_dashboard():
+    return render_template("pages/beheerder/beheerder_portaal.html", 
+                           page_title="dashboard voor beheerder",
+                           description="Beheerder Dashboard")
+
+
+
 @app.route("/registraties_overzicht", methods=["GET"])
 def registraties_overzicht():
     registraties = Registratie_model.get_all_registraties()
@@ -176,9 +184,12 @@ def clear_session():
     
 @app.route("/OrganisatieAccount")
 def OrganisatieAccount():
+    correct = request.args.get("correct")
     return render_template("pages/beheerder/maak_organisatieaccount.html", 
                            page_title="OrganisatieAccount", 
-                           description="Pagina om een organisatieaccount aan te maken. Vul het formulier in om een organisatie toe te voegen.")
+                           description="Pagina om een organisatieaccount aan te maken. Vul het formulier in om een organisatie toe te voegen.",
+                           correct=correct)
+
 @app.route("/organisatie/goedkeurde-inschrijvingen")
 def organisatie_goedgekeurd():
     if session.get("user_type") != "organization":
@@ -199,7 +210,7 @@ def submit():
     if request.method == "GET":
         return redirect("/")
     data = request.form
-    submit_organisation_account(
+    add_to_database = submit_organisation_account(
     data["name"],
     data["type"],
     data["website"],
@@ -209,7 +220,9 @@ def submit():
     data["phone"],
     data["details"]
     ).add_to_database()
-    return redirect("/")
+    if add_to_database == "no":
+        return redirect(f"/OrganisatieAccount?correct=no")
+    return redirect(f"/OrganisatieAccount?correct=yes")
 
 @app.route("/submit_study", methods=["POST"])
 def submit_study():
