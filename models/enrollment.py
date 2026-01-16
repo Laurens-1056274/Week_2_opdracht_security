@@ -51,3 +51,11 @@ class Enrollment:
             """, (profile_id,))
             return cur.fetchall()
 
+    def create(self, profile_id, study_id):
+        conn = self.db.connect()
+        conn.execute("""
+        INSERT INTO enrollments (profile_id, study_id, status)
+        VALUES (?, ?, 'in afwachting')
+        """, (profile_id, study_id))
+        conn.commit()
+        conn.close()
