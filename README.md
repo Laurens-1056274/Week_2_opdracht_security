@@ -3,6 +3,24 @@
 
 Template Designer Documentation — Jinja Documentation (3.1.x). (z.d.). https://jinja.palletsprojects.com/en/stable/templates/
 
+W3Schools.com. (z.d.).
+https://www.w3schools.com/html/
+
+W3Schools.com. (z.d.-b). 
+https://www.w3schools.com/css/
+
+GeeksforGeeks. (2021, 2 juli). Inserting variables to database table using Python. GeeksforGeeks.
+https://www.geeksforgeeks.org/python/inserting-variables-to-database-table-using-python/
+
+W3Schools online HTML editor. (z.d.). 
+https://www.w3schools.com/css/tryit.asp?filename=trycss_form_border
+
+Quickstart — Flask Documentation (3.1.X). (z.d.).
+https://flask.palletsprojects.com/en/stable/quickstart/#sessions
+
+User. (2019, 12 december). How do I clear a flask session? Stack Overflow.
+https://stackoverflow.com/questions/27747578/how-do-i-clear-a-flask-session
+
 
 # Ai:
 
