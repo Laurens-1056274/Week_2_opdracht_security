@@ -47,6 +47,16 @@
             Profiel
           </a>
         </li>
+        <li>
+          <a
+            href="{{ url_for('ervaringsdeskundige_onderzoeken') }}"
+            class="{% if request.endpoint == 'ervaringsdeskundige_onderzoeken' %}active{% endif %}"
+          >
+            Onderzoeken
+          </a>
+        </li>
+
+        {% endif %} {% if session.user_type == "organization" %}
 
         <li>
           <a
