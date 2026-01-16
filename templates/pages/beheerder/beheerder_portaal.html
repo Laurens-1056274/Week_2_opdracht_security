@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+body {
+  overflow: auto !important;
+}
+iframe {
+  border: none;
+
+}
+</style>
+
+<iframe
+  src="http://127.0.0.1:5000/OrganisatieAccount"
+  name="maak_een_organisatieaccount"
+  title="maak een organisatieaccount aan"
+  width="1200"
+  height="1300"
+></iframe>
+
+<iframe
+  src="http://127.0.0.1:5000/beheerder/inschrijvingen"
+  name="keur_inschrijvingen_goed_of_af"
+  title="keur inschrijvingen goed of af"
+  width="1200"
+  height="400"
+></iframe>
+
+<iframe
+  src="http://127.0.0.1:5000/onderzoeken"
+  name="keur_onderzoeken_goed_of_af"
+  title="keur onderzoeken goed of af"
+  width="1200"
+  height="700"
+></iframe>
+
+<iframe
+  src="http://127.0.0.1:5000/registraties_overzicht"
+  name="zie_alle_nieuwe_registraties"
+  title="zie nieuwe registraties"
+  width="1200"
+  height="1300"
+></iframe>
+
+<script src="static/js/hide_navbar.js"></script>
+
+{% endblock %}
