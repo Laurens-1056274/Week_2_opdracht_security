@@ -1,7 +1,8 @@
 <nav class="navbar" role="navigation" aria-label="Main Navigation">
   <div class="container">
     <ul id="nav-menu" class="nav-menu">
-      <div class="main_menu">
+
+      <ul class="main_menu">
         <li>
           <a
             href="{{ url_for('index') }}"
@@ -28,25 +29,29 @@
         </li>
 
         <li>
-          <a href="{{ url_for('onderzoeken') }}"> Onderzoeken </a>
+          <a href="{{ url_for('onderzoeken') }}">Onderzoeken</a>
+        </li>
+
+        <li>
+          <a
+            href="{{ url_for('registraties_overzicht') }}"
+            class="{% if request.endpoint == 'registraties_overzicht'%}active{% endif %}"
+          >
+            Registraties
+          </a>
         </li>
 
         <li>
           <a
             href="{{ url_for('beheerder_dashboard') }}"
             class="{% if request.endpoint == 'beheerder_dashboard' %}active{% endif %}"
-            >beheerder dashboard</a
           >
+            Beheerder dashboard
+          </a>
         </li>
-        {% endif %} {% if session.user_type == "expert" %}
-        <li>
-          <a
-            href="{{ url_for('registraties_overzicht') }}"
-            class="{% if request.endpoint == 'registraties_overzicht'%}active{% endif %}"
-            >Registraties</a
-          >
-        </li>
-        {% endif %} {% if session.user_type == "expert" %}
+        {% endif %}
+
+        {% if session.user_type == "expert" %}
         <li>
           <a
             href="{{ url_for('ervaringsdeskundige_inschrijvingen') }}"
@@ -71,26 +76,9 @@
             Onderzoeken
           </a>
         </li>
+        {% endif %}
 
-        {% endif %} {% if session.user_type == "organization" %}
-
-        <li>
-          <a
-            href="{{ url_for('ervaringsdeskundige_inschrijvingen') }}"
-            class="{% if request.endpoint == 'ervaringsdeskundige_inschrijvingen' %}active{% endif %}"
-          >
-            Mijn inschrijvingen
-          </a>
-        </li>
-        <li>
-          <a
-            href="{{ url_for('ervaringsdeskundige_profiel') }}"
-            class="{% if request.endpoint == 'ervaringsdeskundige_profiel' %}active{% endif %}"
-          >
-            Profiel
-          </a>
-        </li>
-        {% endif %} {% if session.user_type == "organization" %}
+        {% if session.user_type == "organization" %}
         <li>
           <a
             href="{{ url_for('organisatie_onderzoeken') }}"
@@ -107,7 +95,9 @@
             Overzicht Deelnemers
           </a>
         </li>
-        {% endif %} {% if session.user_type == "not defined" %}
+        {% endif %}
+
+        {% if session.user_type == "not defined" %}
         <li>
           <a
             href="{{ url_for('login_page') }}"
@@ -117,7 +107,7 @@
           </a>
         </li>
         {% endif %}
-      </div>
+      </ul>
 
       {% if session.user_type != "not defined" %}
       <li>
@@ -129,6 +119,7 @@
         </a>
       </li>
       {% endif %}
+
     </ul>
   </div>
 </nav>

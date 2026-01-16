@@ -116,12 +116,12 @@
     </table>
 <br>
     <form method="post" action="{{ url_for('registratie_goedkeuren', user_id=profile.user_id) }}">
-                <button class=goedkeuren>Goedkeuren</button>
+                <button class=goedkeuren style="color: black;">Goedkeuren</button>
     </form>
 
     <form method="post" action="{{ url_for('registratie_afkeuren', user_id=profile.user_id) }}"
          onsubmit="return confirm('Weet u zeker dat u deze registratie wilt afkeuren?');">
-                <button class=afkeuren>Afkeuren</button>
+                <button class=afkeuren style="color: black;">Afkeuren</button>
     </form>
 </div>
 
