@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="subtitle">{{ onderzoek.title }}</h2>
+
+{% if error %}
+  <p style="color: red; margin-bottom: 15px;">
+    {{ error }}
+  </p>
+{% endif %}
+
+<div class="table-container">
+  <table>
+    <tr>
+      <th>Organisatie</th>
+      <td>{{ onderzoek.organisatie }}</td>
+    </tr>
+
+    <tr>
+      <th>Beschrijving</th>
+      <td>{{ onderzoek.description }}</td>
+    </tr>
+
+    <tr>
+      <th>Type onderzoek</th>
+      <td>{{ onderzoek.study_type }}</td>
+    </tr>
+
+    <tr>
+      <th>Locatie</th>
+      <td>
+        {% if onderzoek.location %}
+          {{ onderzoek.location }}
+        {% else %}
+          Online
+        {% endif %}
+      </td>
+    </tr>
+
+    <tr>
+      <th>Leeftijd</th>
+      <td>
+        {{ onderzoek.age_min }} – {{ onderzoek.age_max }}
+      </td>
+    </tr>
+
+    <tr>
+      <th>Beloning</th>
+      <td>
+        {% if onderzoek.has_reward %}
+          {{ onderzoek.reward }}
+        {% else %}
+          Geen beloning
+        {% endif %}
+      </td>
+    </tr>
+
+    <tr>
+      <th>Benodigde beperkingen</th>
+      <td>
+        {% if beperkingen %}
+          <ul style="margin: 0; padding-left: 18px;">
+            {% for b in beperkingen %}
+              <li>{{ b[1] }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          Geen specifieke beperking vereist
+        {% endif %}
+      </td>
+    </tr>
+  </table>
+</div>
+
+<form method="POST" style="margin-top: 20px;">
+  <button class="action-btn goedkeuren">
+    Inschrijven voor dit onderzoek
+  </button>
+</form>
+
+{% endblock %}

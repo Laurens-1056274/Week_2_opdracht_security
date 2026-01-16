@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="subtitle">Beschikbare onderzoeken</h2>
+
+<div class="table-container">
+  <table>
+    <tr>
+      <th>Titel</th>
+      <th>Organisatie</th>
+      <th>Actie</th>
+    </tr>
+
+    {% for onderzoek in onderzoeken %}
+    <tr>
+      <td>{{ onderzoek[1] }}</td>
+      <td>{{ onderzoek[2] }}</td>
+      <td>
+        <a href="/ervaringsdeskundige/onderzoek/{{ onderzoek[0] }}">
+          <button class="action-btn">
+            Bekijk details
+          </button>
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+{% endblock %}
