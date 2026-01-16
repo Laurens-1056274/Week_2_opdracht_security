@@ -1,0 +1,76 @@
+/* --- TABLE WRAPPER --- */
+.table-container {
+  margin: 0 auto;
+  padding: 2.5em;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e2e2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow-x: hidden;
+
+  @media (max-width: 1000px) {
+    overflow-x: scroll;
+    width: 80vw;
+  }
+}
+
+/* --- TABLE --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  border-radius: 12px;
+}
+
+.table-scroller {
+    height: 80vh;
+    overflow-y: auto;
+}
+
+th,
+td {
+  padding: 0.9em 1.2em;
+  text-align: center;
+}
+
+th {
+  background: #f4f6f8;
+  font-weight: 600;
+  color: #333;
+}
+
+tr:nth-child(even) {
+  background: #fafafa;
+}
+
+tr:hover {
+  background: #eef6ff;
+}
+
+/* --- BUTTONS --- */
+.action-btn {
+  padding: 0.6em 1em;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: #fff;
+  transition: 0.2s ease;
+}
+
+.action-btn:hover {
+  opacity: 0.85;
+}
+
+/* Specific colors */
+.action-btn.goedkeuren {
+  background: #4caf50;
+}
+
+.action-btn.afkeuren {
+  background: #e53935;
+}
+
+td a {
+  text-decoration: none;
+}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="form-card">
+  <p>
+    Op deze pagina ziet u een overzicht van alle goedgekeurde deelnemers
+    voor uw onderzoeken
+  </p>
+
+  {% if rows|length == 0 %}
+    <p>Geen goedgekeurde inschrijvingen.</p>
+  {% else %}
+    <table>
+      <thead>
+        <tr>
+          <th>ID inschrijving</th>
+          <th>Naam deelnemer</th>
+          <th>Onderzoek</th>
+          <th>Datum inschrijving</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td>{{ r[0] }}</td>
+          <td>{{ r[1] }}</td>
+          <td>{{ r[2] }}</td>
+          <td>{{ r[3] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+</div>
+
+{% endblock %}

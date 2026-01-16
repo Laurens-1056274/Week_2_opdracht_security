@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Mijn inschrijvingen</h1>
+
+<p>Hier ziet u de status van uw inschrijvingen</p>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Onderzoek</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% if inschrijvingen %}
+            {% for i in inschrijvingen %}
+            <tr>
+                <td>{{ i[0] }}</td>
+                <td>{{ i[1] }}</td>
+                <td>{{ i[2] }}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="3">Je hebt nog geen inschrijvingen.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+{% endblock %}

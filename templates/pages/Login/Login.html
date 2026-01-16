@@ -1,195 +1,129 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "base.html" %} {% block content %}
+
 <div class="form-container">
-
   {% if session.type_login == "-" %}
-  <h2 class="subtitle"> Kies voor wat type account u inlogt </h2>
+  <h2 class="subtitle">Kies voor wat type account u inlogt</h2>
 
-  <form action="/login" method="GET" class="form-card" >
-    <button type="submit" name="type_login" value="user" class="submit-btn">user</button>
+  <form action="/login" method="GET" class="form-card">
+    <button type="submit" name="type_login" value="user" class="submit-btn">
+      user
+    </button>
   </form>
 
-    <form action="/login" method="GET" class="form-card" >
-    <button type="submit" name="type_login" value="organization" class="submit-btn">organization</button>
+  <form action="/login" method="GET" class="form-card">
+    <button
+      type="submit"
+      name="type_login"
+      value="organization"
+      class="submit-btn"
+    >
+      organization
+    </button>
   </form>
-  {% endif %}
-
-  {% if session.type_login == "user" %}
-  <h2 class="subtitle"> Vul de onderstaande gegevens in om in te loggen als "user" </h2>
+  {% endif %} {% if session.type_login == "user" %}
+  <h2 class="subtitle">
+    Vul de onderstaande gegevens in om in te loggen als "user"
+  </h2>
   {% if correct == "no" %}
-    <style>
-      label {display: block;}
+  <style>
+    label {
+      display: block;
+    }
 
-      input[type=text],
-      input[type=email] {
-        width: 100%;
-        padding: 12px;
-        margin: 10px 0;
-        box-sizing: border-box;
-        border: 2px solid red;
-        border-radius: 8px;
-      }
-    </style>
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      box-sizing: border-box;
+      border: 2px solid red;
+      border-radius: 8px;
+    }
+  </style>
   {% endif %}
-  <form action="/login_check_user" method="POST" class="form-card" >
+  <form action="/login_check_user" method="POST" class="form-card">
     {% if correct == "no" %}
-    <h3> Verkeerde inloggegevens</h3>
+    <h3>Verkeerde inloggegevens</h3>
     {% endif %}
     <div class="form-group">
       <label for="email">uw e-mail adress:</label>
-      <input type="email" id="email" name="email" placeholder="voorbeeld@gmail.com" required />
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="voorbeeld@gmail.com"
+        required
+      />
     </div>
-
-
 
     <div class="form-group">
       <label for="wachtwoord">uw wachtwoord:</label>
-      <input type="text" id="wachtwoord" name="wachtwoord" placeholder="wachtwoord" required />
+      <input
+        type="text"
+        id="wachtwoord"
+        name="wachtwoord"
+        placeholder="wachtwoord"
+        required
+      />
     </div>
 
     <button type="submit" class="submit-btn">inloggen</button>
   </form>
-  {% endif %}
-
-
-  {% if session.type_login == "organization" %}
-  <h2 class="subtitle"> Vul de onderstaande gegevens in om in te loggen als organisatie </h2>
+  {% endif %} {% if session.type_login == "organization" %}
+  <h2 class="subtitle">
+    Vul de onderstaande gegevens in om in te loggen als organisatie
+  </h2>
   {% if correct == "no" %}
-    <style>
-      label {display: block;}
+  <style>
+    label {
+      display: block;
+    }
 
-      input[type=text],
-      input[type=email],
-      input[type=tell] {
-        width: 100%;
-        padding: 12px;
-        margin: 10px 0;
-        box-sizing: border-box;
-        border: 2px solid red;
-        border-radius: 8px;
-      }
-    </style>
+    input[type="text"],
+    input[type="email"],
+    input[type="tell"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      box-sizing: border-box;
+      border: 2px solid red;
+      border-radius: 8px;
+    }
+  </style>
   {% endif %}
-  <form action="/login_check_organization" method="POST" class="form-card" >
+  <form action="/login_check_organization" method="POST" class="form-card">
     {% if correct == "no" %}
-    <h3> Verkeerde inloggegevens</h3>
+    <h3>Verkeerde inloggegevens</h3>
     {% endif %}
     <div class="form-group">
       <label for="email">uw e-mail adress:</label>
-      <input type="email" id="email" name="email" placeholder="voorbeeld@gmail.com" required />
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="voorbeeld@gmail.com"
+        required
+      />
     </div>
-
-
 
     <div class="form-group">
       <label for="phone">uw telefoon nummer:</label>
-      <input type="tell" id="phone" name="phone" placeholder="061234567" required />
+      <input
+        type="tell"
+        id="phone"
+        name="phone"
+        placeholder="061234567"
+        required
+      />
     </div>
 
     <button type="submit" class="submit-btn">inloggen</button>
   </form>
   {% endif %}
 </div>
-
-
-
-
-
 <style scoped>
-  .form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 50em;
-    margin: 0 auto;
-    padding: 2.5em;
-    background: #ffffff;
-    border-radius: 12px;
-    border: 1px solid #e2e2e2;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  }
-
-  .subtitle {
-    color: #666;
-    font-size: 1rem;
-    margin-bottom: 1.5em;
-    text-align: center;
-    max-width: 500px;
-  }
-
-  .form-card {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 1.4em;
-  }
-
-  .form-group {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .form-group label {
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin-bottom: 0.4em;
-    color: #333;
-  }
-
-  input,
-  textarea {
-    width: 100%;
-    padding: 0.85em;
-    font-size: 0.95rem;
-    border-radius: 8px;
-    border: 1px solid #cfcfcf;
-    font-family: inherit;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  input:focus,
-  textarea:focus {
-    border-color: #0077cc;
-    box-shadow: 0 0 4px rgba(0, 119, 204, 0.25);
-    outline: none;
-  }
-
-  textarea {
-    min-height: 90px;
-    resize: vertical;
-  }
-
-  .radio-group {
-    display: flex;
-    gap: 2em;
-    font-size: 0.95rem;
-    margin-top: 0.3em;
-  }
-
-  .radio-group label {
-    display: flex;
-    align-items: center;
-    gap: 0.4em;
-    cursor: pointer;
-    color: #444;
-  }
-
-  .submit-btn {
-    width: 100%;
-    padding: 0.9em;
-    font-size: 1rem;
-    font-weight: 600;
-    background: #0077cc;
-    color: #ffffff;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s ease;
-  }
-
-  .submit-btn:hover {
-    background: #005fa3;
+  button {
+    margin-bottom: 10px;
   }
 </style>
 {% endblock %}
