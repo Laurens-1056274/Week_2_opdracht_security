@@ -20,12 +20,18 @@
       <td>{{ inschrijving.onderzoek }}</td>
       <td>{{ inschrijving.status }}</td>
       <td>
-        <a href="/beheerder/inschrijvingen/{{ inschrijving.id }}/goedkeuren">
-          <button class="action-btn goedkeuren" style="color: black;">Goedkeuren</button>
-        </a>
-        <a href="/beheerder/inschrijvingen/{{ inschrijving.id }}/afkeuren">
-          <button class="action-btn afkeuren" style="color: black;">Afkeuren</button>
-        </a>
+        <form method="post" action="{{ url_for('inschrijving_goedkeuren', inschrijving_id=inschrijving.id) }}" style="display:inline;">
+          <button type="submit" class="action-btn goedkeuren">
+            Goedkeuren
+          </button>
+        </form>
+
+        <form method="post" action="{{ url_for('inschrijving_afkeuren', inschrijving_id=inschrijving.id) }}" style="display:inline;"
+              onsubmit="return confirm('Weet u zeker dat u deze inschrijving wilt afkeuren?');">
+          <button type="submit" class="action-btn afkeuren">
+            Afkeuren
+          </button>
+        </form>
       </td>
     </tr>
     {% endfor %}

@@ -65,16 +65,16 @@ def beheerder_inschrijvingen():
             "status": row[4],       
         })
     return render_template( "pages/beheerder/beheerder_inschrijvingen.html", 
-                           page_title="BeheerderInschrijvingen",
-                           inschrijvingen=inschrijvingen
+                        page_title="BeheerderInschrijvingen",
+                        inschrijvingen=inschrijvingen
     )
-@app.route("/beheerder/inschrijvingen/<int:inschrijving_id>/goedkeuren")
+@app.route("/beheerder/inschrijvingen/<int:inschrijving_id>/goedkeuren", methods=["POST"])
 def inschrijving_goedkeuren(inschrijving_id):
     enrollments.update_status(inschrijving_id, "goedgekeurd")
     return redirect(url_for("beheerder_inschrijvingen"))
 
 
-@app.route("/beheerder/inschrijvingen/<int:inschrijving_id>/afkeuren")
+@app.route("/beheerder/inschrijvingen/<int:inschrijving_id>/afkeuren", methods=["POST"])
 def inschrijving_afkeuren(inschrijving_id):
     enrollments.update_status(inschrijving_id, "afgekeurd")
     return redirect(url_for("beheerder_inschrijvingen"))
@@ -83,8 +83,8 @@ def inschrijving_afkeuren(inschrijving_id):
 @app.route("/beheerder_dashboard")
 def beheerder_dashboard():
     return render_template("pages/beheerder/beheerder_portaal.html", 
-                           page_title="dashboard voor beheerder",
-                           description="Beheerder Dashboard")
+                        page_title="dashboard voor beheerder",
+                        description="Beheerder Dashboard")
 
 
 
