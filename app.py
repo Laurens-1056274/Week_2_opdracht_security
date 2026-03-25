@@ -214,8 +214,8 @@ def login_page():
 @app.route("/logout")
 def logout():
     return render_template("pages/login/logout.html", 
-                           page_title="confirmatie uitloggen", 
-                           description="Pagina om uit te loggen, klik op de uitloggen knop om uit te loggen.")
+                        page_title="confirmatie uitloggen", 
+                        description="Pagina om uit te loggen, klik op de uitloggen knop om uit te loggen.")
 
 @app.route("/clear_session")
 def clear_session():
@@ -311,10 +311,10 @@ def onderzoeken():
     conn = db.connect()
     beoordelen = conn.execute("""
     SELECT
-      s.id, s.organization_id, s.title, s.status, s.available, s.description,
-      s.start_date, s.end_date, s.study_type, s.location, s.has_reward, s.reward,
-      s.age_min, s.age_max,
-      o.name AS org_name
+    s.id, s.organization_id, s.title, s.status, s.available, s.description,
+    s.start_date, s.end_date, s.study_type, s.location, s.has_reward, s.reward,
+    s.age_min, s.age_max,
+    o.name AS org_name
     FROM studies s
     JOIN organizations o ON o.id = s.organization_id
     ORDER BY s.start_date DESC
@@ -344,33 +344,63 @@ def onderzoek_afkeuren(onderzoek_id):
 
 @app.route("/organisatie/onderzoeken")
 def organisatie_onderzoeken():
-    rows = studies.all_with_details()
+    if session.get("user_type") != "organization":
+        return redirect("/login")
+
+    organization_id = session.get("organization_id")
+    conn = db.connect()
+
+    rows = conn.execute("""
+        SELECT
+            s.id,
+            s.organization_id,
+            o.name AS organisatie,
+            s.title,
+            s.status,
+            s.available,
+            s.description,
+            s.start_date,
+            s.end_date,
+            s.study_type,
+            s.location,
+            s.has_reward,
+            s.reward,
+            s.age_min,
+            s.age_max
+        FROM studies s
+        JOIN organizations o ON o.id = s.organization_id
+        WHERE s.organization_id = ?
+        ORDER BY s.start_date DESC
+    """, (organization_id,)).fetchall()
+
+    conn.close()
+
     onderzoeken = []
     for row in rows:
         onderzoeken.append({
-            "id": row["id"],            
+            "id": row["id"],
             "organization_id": row["organization_id"],
             "organisatie": row["organisatie"],
-            "title": row["title"],       
-            "status": row["status"],       
-            "available": row["available"],       
-            "description": row["description"],       
-            "start_date": row["start_date"],       
-            "end_date": row["end_date"],       
-            "study_type": row["study_type"],       
-            "location": row["location"],       
-            "has_reward": row["has_reward"],       
-            "reward": row["reward"],       
-            "age_min": row["age_min"],       
-            "age_max": row["age_max"],       
+            "title": row["title"],
+            "status": row["status"],
+            "available": row["available"],
+            "description": row["description"],
+            "start_date": row["start_date"],
+            "end_date": row["end_date"],
+            "study_type": row["study_type"],
+            "location": row["location"],
+            "has_reward": row["has_reward"],
+            "reward": row["reward"],
+            "age_min": row["age_min"],
+            "age_max": row["age_max"],
         })
+
     return render_template(
         "pages/organisatie/organisatie_onderzoeken.html",
         page_title="Organisatie Onderzoek",
         description="Organisatie Onderzoek",
         onderzoeken=onderzoeken
     )
-
 
 @app.route("/ervaringsdeskundige/inschrijvingen")
 def ervaringsdeskundige_inschrijvingen():

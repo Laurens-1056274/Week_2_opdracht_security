@@ -50,12 +50,14 @@
             <td>{{ onderzoek.age_min }}</td>
             <td>{{ onderzoek.age_max }}</td>
             <td>
-              <a href="/beheerder/onderzoeken/{{ onderzoek.id }}/goedkeuren">
-                <button class=goedkeuren style="color: black;">Goedkeuren</button>
-              </a>
-              <a href="/beheerder/onderzoeken/{{ onderzoek.id }}/afkeuren">
-                <button class=afkeuren style="color: black;">Afkeuren</button>
-              </a>
+              <form method="post" action="{{ url_for('onderzoek_goedkeuren', onderzoek_id=onderzoek.id) }}" style="display:inline;">
+                <button type="submit" class="goedkeuren">Goedkeuren</button>
+              </form>
+
+              <form method="post" action="{{ url_for('onderzoek_afkeuren', onderzoek_id=onderzoek.id) }}" style="display:inline;"
+                    onsubmit="return confirm('Weet u zeker dat u dit onderzoek wilt afkeuren?');">
+                <button type="submit" class="afkeuren">Afkeuren</button>
+              </form>
             </td>
           </tr>
           {% endfor %}
