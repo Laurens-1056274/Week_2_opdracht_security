@@ -13,6 +13,10 @@ from database_related_code.login_oranization import login_account_organization
 from database_related_code.login_user import login_account
 
 app = Flask(__name__)
+def require_admin():
+    if session.get("user_type") != "admin":
+        return redirect("/login")
+    return None
 app.secret_key = "hello"
 startup_code = True
 BASE_DIR = os.path.dirname(__file__)
@@ -27,7 +31,7 @@ Registratie_model = Registratie('./app.db')
 user_role_admin = False
 user_role_organization = False
 user_role_expert = False
-db = Database("data/app.db")
+db = Database(DB_PATH)
 
 @app.route("/")
 def index():
@@ -54,75 +58,111 @@ def index():
 
 @app.route("/beheerder/inschrijvingen")
 def beheerder_inschrijvingen():
+    check = require_admin()
+    if check:
+        return check
+
     rows = enrollments.all_with_details()
     inschrijvingen = []
     for row in rows:
         inschrijvingen.append({
-            "id": row[0],           
-            "naam": row[1],        
-            "organisatie": row[2],  
-            "onderzoek": row[3],   
-            "status": row[4],       
+            "id": row[0],
+            "naam": row[1],
+            "organisatie": row[2],
+            "onderzoek": row[3],
+            "status": row[4],
         })
-    return render_template( "pages/beheerder/beheerder_inschrijvingen.html", 
-                        page_title="BeheerderInschrijvingen",
-                        inschrijvingen=inschrijvingen
+    return render_template(
+        "pages/beheerder/beheerder_inschrijvingen.html",
+        page_title="BeheerderInschrijvingen",
+        inschrijvingen=inschrijvingen
     )
+
 @app.route("/beheerder/inschrijvingen/<int:inschrijving_id>/goedkeuren", methods=["POST"])
 def inschrijving_goedkeuren(inschrijving_id):
+    check = require_admin()
+    if check:
+        return check
+
     enrollments.update_status(inschrijving_id, "goedgekeurd")
     return redirect(url_for("beheerder_inschrijvingen"))
 
-
 @app.route("/beheerder/inschrijvingen/<int:inschrijving_id>/afkeuren", methods=["POST"])
 def inschrijving_afkeuren(inschrijving_id):
+    check = require_admin()
+    if check:
+        return check
+
     enrollments.update_status(inschrijving_id, "afgekeurd")
     return redirect(url_for("beheerder_inschrijvingen"))
 
-
 @app.route("/beheerder_dashboard")
 def beheerder_dashboard():
-    return render_template("pages/beheerder/beheerder_portaal.html", 
-                        page_title="dashboard voor beheerder",
-                        description="Beheerder Dashboard")
+    check = require_admin()
+    if check:
+        return check
 
+    return render_template(
+        "pages/beheerder/beheerder_portaal.html",
+        page_title="dashboard voor beheerder",
+        description="Beheerder Dashboard"
+    )
 
 
 @app.route("/registraties_overzicht", methods=["GET"])
 def registraties_overzicht():
+    check = require_admin()
+    if check:
+        return check
+
     registraties = Registratie_model.get_all_registraties()
 
-    return render_template("pages/beheerder/registraties_overzicht.html",
-                           page_title="Registraties overzicht",
-                           description="Overzicht van nieuwe registraties",
-                           registraties=registraties)
+    return render_template(
+        "pages/beheerder/registraties_overzicht.html",
+        page_title="Registraties overzicht",
+        description="Overzicht van nieuwe registraties",
+        registraties=registraties
+    )
 
 @app.route("/registratie_details/<int:profile_id>", methods=["GET"])
 def registratie_details(profile_id):
+    check = require_admin()
+    if check:
+        return check
+
     profile = Registratie_model.get_profile_details(profile_id)
-    return render_template("pages/beheerder/registratie_details.html",
-                           page_title="Registratie details",
-                           description="Alle data van de deskundige",
-                           profile=profile)
+    return render_template(
+        "pages/beheerder/registratie_details.html",
+        page_title="Registratie details",
+        description="Alle data van de deskundige",
+        profile=profile
+    )
 
 @app.route("/registratie/<int:user_id>/goedkeuren", methods=["POST"])
 def registratie_goedkeuren(user_id):
+    check = require_admin()
+    if check:
+        return check
+
     users = RegistratieDetails("data/app.db")
     users.update_status(user_id, "goedgekeurd")
     return redirect(url_for("registraties_overzicht"))
 
 @app.route("/registratie/<int:user_id>/afkeuren", methods=["POST"])
 def registratie_afkeuren(user_id):
+    check = require_admin()
+    if check:
+        return check
+
     users = RegistratieDetails("data/app.db")
     users.update_status(user_id, "nieuw")
     return redirect(url_for("registraties_overzicht"))
 
-
 @app.route("/ervaringsdeskunidge_dashboard")
 def ervaringsdeskunidge_dashboard():
     return render_template("pages/beheerder/ervaringsDeskundigeDashboard.html", 
-                           page_title="dashboard",
-                           description="Ervarings Deskundige Dashboard")
+                    page_title="dashboard",
+                    description="Ervarings Deskundige Dashboard")
 
 @app.route("/login_check_user", methods=["GET", "POST"])
 def check_login_user():
@@ -184,12 +224,17 @@ def clear_session():
     
 @app.route("/OrganisatieAccount")
 def OrganisatieAccount():
-    correct = request.args.get("correct")
-    return render_template("pages/beheerder/maak_organisatieaccount.html", 
-                           page_title="OrganisatieAccount", 
-                           description="Pagina om een organisatieaccount aan te maken. Vul het formulier in om een organisatie toe te voegen.",
-                           correct=correct)
+    check = require_admin()
+    if check:
+        return check
 
+    correct = request.args.get("correct")
+    return render_template(
+        "pages/beheerder/maak_organisatieaccount.html",
+        page_title="OrganisatieAccount",
+        description="Pagina om een organisatieaccount aan te maken. Vul het formulier in om een organisatie toe te voegen.",
+        correct=correct
+    )
 @app.route("/organisatie/goedkeurde-inschrijvingen")
 def organisatie_goedgekeurd():
     if session.get("user_type") != "organization":
@@ -207,19 +252,25 @@ def organisatie_goedgekeurd():
 
 @app.route("/submit", methods=["GET", "POST"])
 def submit():
+    check = require_admin()
+    if check:
+        return check
+
     if request.method == "GET":
         return redirect("/")
+
     data = request.form
     add_to_database = submit_organisation_account(
-    data["name"],
-    data["type"],
-    data["website"],
-    data["description"],
-    data["contact_person"],
-    data["email"],
-    data["phone"],
-    data["details"]
+        data["name"],
+        data["type"],
+        data["website"],
+        data["description"],
+        data["contact_person"],
+        data["email"],
+        data["phone"],
+        data["details"]
     ).add_to_database()
+
     if add_to_database == "no":
         return redirect(f"/OrganisatieAccount?correct=no")
     return redirect(f"/OrganisatieAccount?correct=yes")
@@ -253,6 +304,10 @@ def submit_study():
 
 @app.route("/onderzoeken")
 def onderzoeken():
+    check = require_admin()
+    if check:
+        return check
+
     conn = db.connect()
     beoordelen = conn.execute("""
     SELECT
@@ -268,14 +323,22 @@ def onderzoeken():
 
     return render_template("pages/beheerder/onderzoeken.html", beoordelen=beoordelen)
 
-@app.route("/beheerder/onderzoeken/<int:onderzoek_id>/goedkeuren")
+@app.route("/beheerder/onderzoeken/<int:onderzoek_id>/goedkeuren", methods=["POST"])
 def onderzoek_goedkeuren(onderzoek_id):
-    studies.update_status(onderzoek_id, "goedgekeurd")
-    return redirect(url_for("onderzoeken"))    
-    
+    check = require_admin()
+    if check:
+        return check
 
-@app.route("/beheerder/onderzoeken/<int:onderzoek_id>/afkeuren")
+    studies.update_status(onderzoek_id, "goedgekeurd")
+    return redirect(url_for("onderzoeken"))
+
+
+@app.route("/beheerder/onderzoeken/<int:onderzoek_id>/afkeuren", methods=["POST"])
 def onderzoek_afkeuren(onderzoek_id):
+    check = require_admin()
+    if check:
+        return check
+
     studies.update_status(onderzoek_id, "afgekeurd")
     return redirect(url_for("onderzoeken"))
 
