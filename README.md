@@ -1,20 +1,21 @@
 # ReadmeWerkplaats 2: 1C2
 
 # Requirements installatie
+De code maakt gebruik van Python 3.13. Mocht u dit nog niet hebben geïnstalleerd, doe dit dan eerst
 
 ## Stap 1:
-download de zip file van de laatste release en extact all (unzip de zip file)
+Download de zipfile van de laatste release en extract all (unzip de zipfile)
 
 ## Stap 2:
 Open het bestand en run app.py met de terminal
 
 ## Stap 3:
-Instaleer de requirements met pip:
+Installeer de requirements met pip:
 ```python
 pip install -r requirements.txt
 ```
 ## Stap 4:
-run app.py in de terminal met het command:
+Voe de applicatie uit door app.py in de terminal te runnen met het commando:
 ```python
 python app.py
 ```
