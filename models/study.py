@@ -21,7 +21,7 @@ class Study:
             )
             con.commit()
 
-    def all_with_details(self):
+    def all_with_details(self, organization_id):
         with self.db.connect() as con:
             con.row_factory = sqlite3.Row  # <-- this makes rows dictionary-like
             cur = con.cursor()
@@ -45,6 +45,7 @@ class Study:
                     o.name AS organisatie
                 FROM studies s
                 JOIN organizations o ON s.organization_id = o.id
+                WHERE s.organization_id = ?
                 ORDER BY s.start_date DESC
-            """)
+            """, (organization_id,))
             return cur.fetchall()  # now each row behaves like a dict

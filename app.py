@@ -1,5 +1,8 @@
 import os
-from flask import Flask, render_template,request,redirect,session,url_for
+from flask import Flask, render_template,request,redirect,session,url_for,abort
+from functools import wraps
+import secrets
+import hmac
 from data.database import Database
 from models.registration_details import RegistratieDetails
 from models.user import User
@@ -13,7 +16,39 @@ from database_related_code.login_oranization import login_account_organization
 from database_related_code.login_user import login_account
 
 app = Flask(__name__)
-app.secret_key = "hello"
+# Keep session signing secrets out of source code. Set FLASK_SECRET_KEY before starting.
+app.secret_key = os.environ.get("FLASK_SECRET_KEY")
+if not app.secret_key or len(app.secret_key) < 32:
+    raise RuntimeError("Set FLASK_SECRET_KEY to a random value of at least 32 characters")
+app.config.update(SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE="Lax",
+                  SESSION_COOKIE_SECURE=os.environ.get("FLASK_COOKIE_SECURE", "0") == "1")
+
+
+def require_role(*roles):
+    def decorator(view):
+        @wraps(view)
+        def protected(*args, **kwargs):
+            if session.get("user_type") not in roles:
+                abort(403)
+            return view(*args, **kwargs)
+        return protected
+    return decorator
+
+
+@app.before_request
+def protect_posts():
+    if request.method == "POST":
+        expected = session.get("csrf_token", "")
+        supplied = request.form.get("csrf_token", "")
+        if not expected or not hmac.compare_digest(expected, supplied):
+            abort(400, description="Invalid CSRF token")
+
+
+@app.context_processor
+def csrf_context():
+    if "csrf_token" not in session:
+        session["csrf_token"] = secrets.token_urlsafe(32)
+    return {"csrf_token": session["csrf_token"]}
 startup_code = True
 BASE_DIR = os.path.dirname(__file__)
 DB_PATH = os.path.join(BASE_DIR, "data", "app.db")
@@ -23,18 +58,14 @@ users = User(DB_PATH)
 organizations = Organization(DB_PATH)
 studies = Study(DB_PATH)
 enrollments = Enrollment(DB_PATH)
-Registratie_model = Registratie('./app.db')
+Registratie_model = Registratie(DB_PATH)
 user_role_admin = False
 user_role_organization = False
 user_role_expert = False
-db = Database("data/app.db")
+db = Database(DB_PATH)
 
 @app.route("/")
 def index():
-    global startup_code
-    if startup_code == True:
-        session.clear()
-        startup_code = False
     try:
         if session["user_type"] == "admin" or session["user_type"] == "organization" or session["user_type"] == "expert":
             pass
@@ -53,6 +84,7 @@ def index():
     return render_template("pages/index.html", counts=counts)
 
 @app.route("/beheerder/inschrijvingen")
+@require_role("admin")
 def beheerder_inschrijvingen():
     rows = enrollments.all_with_details()
     inschrijvingen = []
@@ -68,19 +100,22 @@ def beheerder_inschrijvingen():
                            page_title="BeheerderInschrijvingen",
                            inschrijvingen=inschrijvingen
     )
-@app.route("/beheerder/inschrijvingen/<int:inschrijving_id>/goedkeuren")
+@app.route("/beheerder/inschrijvingen/<int:inschrijving_id>/goedkeuren", methods=["POST"])
+@require_role("admin")
 def inschrijving_goedkeuren(inschrijving_id):
     enrollments.update_status(inschrijving_id, "goedgekeurd")
     return redirect(url_for("beheerder_inschrijvingen"))
 
 
-@app.route("/beheerder/inschrijvingen/<int:inschrijving_id>/afkeuren")
+@app.route("/beheerder/inschrijvingen/<int:inschrijving_id>/afkeuren", methods=["POST"])
+@require_role("admin")
 def inschrijving_afkeuren(inschrijving_id):
     enrollments.update_status(inschrijving_id, "afgekeurd")
     return redirect(url_for("beheerder_inschrijvingen"))
 
 
 @app.route("/beheerder_dashboard")
+@require_role("admin")
 def beheerder_dashboard():
     return render_template("pages/beheerder/beheerder_portaal.html", 
                            page_title="dashboard voor beheerder",
@@ -89,6 +124,7 @@ def beheerder_dashboard():
 
 
 @app.route("/registraties_overzicht", methods=["GET"])
+@require_role("admin")
 def registraties_overzicht():
     registraties = Registratie_model.get_all_registraties()
 
@@ -98,6 +134,7 @@ def registraties_overzicht():
                            registraties=registraties)
 
 @app.route("/registratie_details/<int:profile_id>", methods=["GET"])
+@require_role("admin")
 def registratie_details(profile_id):
     profile = Registratie_model.get_profile_details(profile_id)
     return render_template("pages/beheerder/registratie_details.html",
@@ -106,12 +143,14 @@ def registratie_details(profile_id):
                            profile=profile)
 
 @app.route("/registratie/<int:user_id>/goedkeuren", methods=["POST"])
+@require_role("admin")
 def registratie_goedkeuren(user_id):
     users = RegistratieDetails("data/app.db")
     users.update_status(user_id, "goedgekeurd")
     return redirect(url_for("registraties_overzicht"))
 
 @app.route("/registratie/<int:user_id>/afkeuren", methods=["POST"])
+@require_role("admin")
 def registratie_afkeuren(user_id):
     users = RegistratieDetails("data/app.db")
     users.update_status(user_id, "nieuw")
@@ -119,6 +158,7 @@ def registratie_afkeuren(user_id):
 
 
 @app.route("/ervaringsdeskunidge_dashboard")
+@require_role("expert")
 def ervaringsdeskunidge_dashboard():
     return render_template("pages/beheerder/ervaringsDeskundigeDashboard.html", 
                            page_title="dashboard",
@@ -147,7 +187,7 @@ def check_login_organization():
     data = request.form
     querie = login_account_organization(
     data["email"],
-    data["phone"])
+    data["wachtwoord"])
     check_organization = querie.search_user_database_organization()    
     if not check_organization:
         return redirect(f"/login?correct={querie.correct}")
@@ -165,7 +205,7 @@ def login_page():
         session["type_login"] = type_of_login
 
     return render_template(
-        "pages/login/login.html",
+        "pages/Login/Login.html",
         page_title="Login",
         description="Login page",
         correct=correct
@@ -173,16 +213,17 @@ def login_page():
 
 @app.route("/logout")
 def logout():
-    return render_template("pages/login/logout.html", 
+    return render_template("pages/Login/logout.html", 
                            page_title="confirmatie uitloggen", 
                            description="Pagina om uit te loggen, klik op de uitloggen knop om uit te loggen.")
 
-@app.route("/clear_session")
+@app.route("/clear_session", methods=["POST"])
 def clear_session():
     session.clear()
     return redirect("/")
     
 @app.route("/OrganisatieAccount")
+@require_role("admin")
 def OrganisatieAccount():
     correct = request.args.get("correct")
     return render_template("pages/beheerder/maak_organisatieaccount.html", 
@@ -191,6 +232,7 @@ def OrganisatieAccount():
                            correct=correct)
 
 @app.route("/organisatie/goedkeurde-inschrijvingen")
+@require_role("organization")
 def organisatie_goedgekeurd():
     if session.get("user_type") != "organization":
         return redirect("/login")
@@ -206,6 +248,7 @@ def organisatie_goedgekeurd():
     )
 
 @app.route("/submit", methods=["GET", "POST"])
+@require_role("admin")
 def submit():
     if request.method == "GET":
         return redirect("/")
@@ -218,16 +261,20 @@ def submit():
     data["contact_person"],
     data["email"],
     data["phone"],
-    data["details"]
+    data["details"],
+    data["wachtwoord"]
     ).add_to_database()
     if add_to_database == "no":
         return redirect(f"/OrganisatieAccount?correct=no")
     return redirect(f"/OrganisatieAccount?correct=yes")
 
 @app.route("/submit_study", methods=["POST"])
+@require_role("organization")
 def submit_study():
     data = request.form
     organization_id = session.get("organization_id")
+    if not organization_id:
+        abort(403)
 
     has_reward = int(data.get("has_reward", 0))
 
@@ -252,6 +299,7 @@ def submit_study():
     return redirect("/organisatie/onderzoeken")
 
 @app.route("/onderzoeken")
+@require_role("admin")
 def onderzoeken():
     conn = db.connect()
     beoordelen = conn.execute("""
@@ -268,20 +316,23 @@ def onderzoeken():
 
     return render_template("pages/beheerder/onderzoeken.html", beoordelen=beoordelen)
 
-@app.route("/beheerder/onderzoeken/<int:onderzoek_id>/goedkeuren")
+@app.route("/beheerder/onderzoeken/<int:onderzoek_id>/goedkeuren", methods=["POST"])
+@require_role("admin")
 def onderzoek_goedkeuren(onderzoek_id):
     studies.update_status(onderzoek_id, "goedgekeurd")
     return redirect(url_for("onderzoeken"))    
     
 
-@app.route("/beheerder/onderzoeken/<int:onderzoek_id>/afkeuren")
+@app.route("/beheerder/onderzoeken/<int:onderzoek_id>/afkeuren", methods=["POST"])
+@require_role("admin")
 def onderzoek_afkeuren(onderzoek_id):
     studies.update_status(onderzoek_id, "afgekeurd")
     return redirect(url_for("onderzoeken"))
 
 @app.route("/organisatie/onderzoeken")
+@require_role("organization")
 def organisatie_onderzoeken():
-    rows = studies.all_with_details()
+    rows = studies.all_with_details(session.get("organization_id"))
     onderzoeken = []
     for row in rows:
         onderzoeken.append({
@@ -310,6 +361,7 @@ def organisatie_onderzoeken():
 
 
 @app.route("/ervaringsdeskundige/inschrijvingen")
+@require_role("expert")
 def ervaringsdeskundige_inschrijvingen():
     user_id = session.get("user_id")
     if user_id is None:
@@ -327,6 +379,7 @@ def ervaringsdeskundige_inschrijvingen():
         inschrijvingen=rows
     )
 @app.route("/ervaringsdeskundige/profiel", methods=["GET", "POST"])
+@require_role("expert")
 def ervaringsdeskundige_profiel():
     user_id = session.get("user_id")
     if user_id is None:
@@ -353,6 +406,7 @@ def ervaringsdeskundige_profiel():
     )
 
 @app.route("/ervaringsdeskundige/onderzoeken")
+@require_role("expert")
 def ervaringsdeskundige_onderzoeken():
     if session.get("user_type") != "expert":
         return redirect("/")
@@ -372,6 +426,7 @@ def ervaringsdeskundige_onderzoeken():
     )
 
 @app.route("/ervaringsdeskundige/onderzoek/<int:onderzoek_id>", methods=["GET", "POST"])
+@require_role("expert")
 def onderzoek_detail(onderzoek_id):
     if session.get("user_type") != "expert":
         return redirect("/")
@@ -386,8 +441,11 @@ def onderzoek_detail(onderzoek_id):
         s.age_min, s.age_max, s.start_date, s.end_date, o.name AS organisatie
     FROM studies s
     JOIN organizations o ON o.id = s.organization_id
-    WHERE s.id = ?
+    WHERE s.id = ? AND s.status = 'goedgekeurd'
     """, (onderzoek_id,)).fetchone()
+    if onderzoek is None:
+        conn.close()
+        abort(404)
     
     beperkingen = conn.execute("""
     SELECT d.id, d.name
@@ -407,10 +465,6 @@ def onderzoek_detail(onderzoek_id):
         user_set = {d[0] for d in user_dis}
         study_set = {b[0] for b in beperkingen}
 
-        print("PROFILE ID:", profile_id)
-        print("USER DISABILITIES:", user_dis)
-        print("USER SET:", user_set)
-        print("STUDY SET:", study_set)
 
 
         if not study_set.issubset(user_set):
@@ -431,4 +485,4 @@ def onderzoek_detail(onderzoek_id):
     )
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)

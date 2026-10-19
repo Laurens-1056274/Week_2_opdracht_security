@@ -1,4 +1,5 @@
 import sqlite3
+from werkzeug.security import generate_password_hash
 
 class Database:
     def __init__(self, path: str):
@@ -173,11 +174,11 @@ class Database:
                 INSERT OR IGNORE INTO users (email, password, role, status, organization_id)
                 VALUES (?, ?, ?, ?, ?)
             ''', [
-                ("admin@hub.com", "admin", "admin", "goedgekeurd", None),
-                ("org-ah@hub.com", "secret", "organization", "goedgekeurd", 2),
-                ("sanne@example.com", "secret", "expert", "goedgekeurd", None),
-                ("jamal@example.com", "secret", "expert", "goedgekeurd", None),
-                ("lotte@example.com", "secret", "expert", "nieuw", None),
+                ("admin@hub.com", generate_password_hash("admin"), "admin", "goedgekeurd", None),
+                ("org-ah@hub.com", generate_password_hash("secret"), "organization", "goedgekeurd", 2),
+                ("sanne@example.com", generate_password_hash("secret"), "expert", "goedgekeurd", None),
+                ("jamal@example.com", generate_password_hash("secret"), "expert", "goedgekeurd", None),
+                ("lotte@example.com", generate_password_hash("secret"), "expert", "nieuw", None),
             ])
 
             # Disabilities (complete list from spec)

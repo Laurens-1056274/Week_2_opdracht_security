@@ -42,6 +42,7 @@
   </style>
   {% endif %}
   <form action="/login_check_user" method="POST" class="form-card">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
     {% if correct == "no" %}
     <h3>Verkeerde inloggegevens</h3>
     {% endif %}
@@ -92,6 +93,7 @@
   </style>
   {% endif %}
   <form action="/login_check_organization" method="POST" class="form-card">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
     {% if correct == "no" %}
     <h3>Verkeerde inloggegevens</h3>
     {% endif %}
@@ -107,12 +109,12 @@
     </div>
 
     <div class="form-group">
-      <label for="phone">uw telefoon nummer:</label>
+      <label for="wachtwoord">uw wachtwoord:</label>
       <input
-        type="tell"
-        id="phone"
-        name="phone"
-        placeholder="061234567"
+        type="password"
+        id="wachtwoord"
+        name="wachtwoord"
+        placeholder="wachtwoord"
         required
       />
     </div>

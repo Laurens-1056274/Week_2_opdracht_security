@@ -116,11 +116,13 @@
     </table>
 <br>
     <form method="post" action="{{ url_for('registratie_goedkeuren', user_id=profile.user_id) }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                 <button class=goedkeuren style="color: black;">Goedkeuren</button>
     </form>
 
     <form method="post" action="{{ url_for('registratie_afkeuren', user_id=profile.user_id) }}"
          onsubmit="return confirm('Weet u zeker dat u deze registratie wilt afkeuren?');">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                 <button class=afkeuren style="color: black;">Afkeuren</button>
     </form>
 </div>

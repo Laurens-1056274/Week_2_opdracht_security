@@ -1,4 +1,5 @@
 import sqlite3
+from werkzeug.security import check_password_hash
 
 class login_account:
     def __init__(self,attribute1,attribute2):
@@ -9,9 +10,9 @@ class login_account:
     def search_user_database_user(self):
         conn = sqlite3.connect('data/app.db')
         c = conn.cursor()
-        c.execute("SELECT * FROM users WHERE email = ? AND password = ? AND status = 'goedgekeurd'", (self.email, self.password))
+        c.execute("SELECT * FROM users WHERE email = ? AND status = 'goedgekeurd'", (self.email,))
         result = c.fetchall()
-        if len(result) == 0:
+        if len(result) == 0 or not check_password_hash(result[0][2], self.password):
             self.correct = "no" 
             return result
         user_type = result[0][3]

@@ -29,6 +29,7 @@
     class="form-card"
     aria-describedby="formInfo"
   >
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
     <div class="form-group">
       <label for="name">Naam organisatie</label>
       <input type="text" id="name" name="name" placeholder="naam" required />
@@ -112,7 +113,11 @@
       ></textarea>
     </div>
 
-    <button type="submit" class="submit-btn" onclick="myAlert()">
+    <div class="form-group">
+      <label for="wachtwoord">Wachtwoord voor organisatie</label>
+      <input type="password" id="wachtwoord" name="wachtwoord" required minlength="12" autocomplete="new-password" />
+    </div>
+    <button type="submit" class="submit-btn" >
       Verzenden
     </button>
   </form>

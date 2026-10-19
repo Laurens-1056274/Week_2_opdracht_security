@@ -2,3 +2,9 @@
 *.xml
 *.db
 data/app.db
+
+# Security settings
+.env
+.env.*
+!.env.example
+__pycache__/

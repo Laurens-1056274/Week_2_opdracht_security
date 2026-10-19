@@ -6,6 +6,7 @@
   </h2>
 
   <form action="/submit_study" method="POST" class="form-card">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
     <!-- Title -->
     <div class="form-group">
       <label for="title">Titel onderzoek</label>

@@ -7,6 +7,7 @@
 <p>Hier kun je je persoonlijke gegevens bekijken en aanpassen</p>
 
 <form method="POST">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
     <label>Voornaam</label><br>
     <input type="text" name="first_name" value="{{ profiel['first_name'] or '' }}"><br><br>
 

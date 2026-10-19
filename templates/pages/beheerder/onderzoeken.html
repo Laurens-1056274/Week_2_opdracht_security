@@ -50,12 +50,14 @@
             <td>{{ onderzoek.age_min }}</td>
             <td>{{ onderzoek.age_max }}</td>
             <td>
-              <a href="/beheerder/onderzoeken/{{ onderzoek.id }}/goedkeuren">
-                <button class=goedkeuren style="color: black;">Goedkeuren</button>
-              </a>
-              <a href="/beheerder/onderzoeken/{{ onderzoek.id }}/afkeuren">
-                <button class=afkeuren style="color: black;">Afkeuren</button>
-              </a>
+              <form method="POST" action="/beheerder/onderzoeken/{{ onderzoek.id }}/goedkeuren">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <button class=goedkeuren style="color: black;">Goedkeuren</button>
+</form>
+              <form method="POST" action="/beheerder/onderzoeken/{{ onderzoek.id }}/afkeuren">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <button class=afkeuren style="color: black;">Afkeuren</button>
+</form>
             </td>
           </tr>
           {% endfor %}
